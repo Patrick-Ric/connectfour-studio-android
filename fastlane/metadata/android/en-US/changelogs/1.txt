@@ -1,0 +1,1 @@
+First Android release: port of ConnectFour Studio (Qt desktop version) with the same engine, levels, match mode, analysis, help and six languages.

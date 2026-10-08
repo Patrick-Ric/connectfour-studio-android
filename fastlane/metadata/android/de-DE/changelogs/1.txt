@@ -1,0 +1,1 @@
+Erste Android-Version: Portierung von ConnectFour Studio (Qt-Desktop-Version) mit derselben Engine, denselben Stufen, Match-Modus, Analyse, Hilfe und sechs Sprachen.

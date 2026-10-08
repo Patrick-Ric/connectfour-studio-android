@@ -1,0 +1,34 @@
+<p>ConnectFour Studio ist ein freies Offline-Programm für „Vier gewinnt“: gegen den Computer spielen, Stellungen analysieren und Engine-Matches austragen. Es ist die Android-Version des gleichnamigen Desktop-Programms mit derselben Engine, denselben Stufen, derselben Hilfe und denselben Texten.</p>
+
+<p><b>Engine</b></p>
+<ul>
+<li>Perfektes Spiel: Kotlin-Portierung des BitBully-Lösers von Markus Thill (Bitboards, MTD(f), Transpositionstabelle) mit dem 12-ply-Eröffnungsbuch mit Distanzen – identische Ergebnisse wie die C++-Engine</li>
+<li>15 Stufen: 0 Verlierer (Spaß-Stufe), 1 Zufall … 14 Perfekt, beschrieben durch (p, s, w): Anteil perfekter Züge, Verlustschutz und Siegsschutz</li>
+<li>Zwei eigene Stufen User (1) und User (2) mit frei wählbaren (p, s, w)</li>
+</ul>
+
+<p><b>Analyse</b></p>
+<ul>
+<li>Wertungszeile unter dem Brett: Gewinn / Remis / Verlust je Spalte und die Steinzahl bis zum Ende</li>
+<li>Dauer-Analyse nach jedem Zug, einmalige Bewertung aller Züge</li>
+<li>Info-Feld mit Tiefe, Wert, Knoten, Zeit, Tempo und Quelle (Buch oder berechnet)</li>
+</ul>
+
+<p><b>Spielmodi</b></p>
+<ul>
+<li>Mensch gegen Computer (auch mit Computer-Eröffnung), zwei Spieler, Computer spielt die Stellung aus</li>
+<li>Computer-Computer-Match mit bis zu 10.000 Partien, Farbwechsel, drei Tempi, Elo-Differenz und kopierbarem Ergebnis</li>
+<li>Spielstand Mensch gegen Computer je Stufe mit Elo-Schätzung</li>
+<li>Zufallsstellungen mit 1–9 Steinen und gewünschtem Ergebnis</li>
+</ul>
+
+<p><b>Außerdem</b></p>
+<ul>
+<li>20 Bretter mit passenden Steinen, Ghost-Stein, Drop-Animation, Markierung von letztem Zug und Gewinnreihe</li>
+<li>Stellungen als .4gp-Dateien laden und speichern (kompatibel zur Desktop-Version), Schnellspeicher</li>
+<li>Ausführliche Hilfe mit Suche und Zoom, Oberfläche auf Deutsch, Englisch, Französisch, Spanisch, Niederländisch und Italienisch</li>
+<li>Hoch- und Querformat, Smartphones und Tablets, Tastenkürzel mit Hardware-Tastatur</li>
+<li>Keine Berechtigungen, kein Internetzugriff, keine Werbung, kein Tracking</li>
+</ul>
+
+<p>Lizenz: GNU AGPL v3. Engine: BitBully von Markus Thill (AGPL v3), Eröffnungsbuch: bitbully-databases (MIT).</p>

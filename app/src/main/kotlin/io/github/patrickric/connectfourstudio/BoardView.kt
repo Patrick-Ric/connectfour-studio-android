@@ -28,8 +28,18 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     var cell: Int = 40
         private set
     private val density = resources.displayMetrics.density
-    val scoreH: Int = Math.round(SCORE_H_DP * density)
+    /** Height of the evaluation row (44 dp, less on small landscape screens). */
+    var scoreH: Int = Math.round(SCORE_H_DP * density)
+        private set
     private val scoreGap: Int = Math.round(SCORE_GAP_DP * density)
+
+    fun setScoreHeight(h: Int) {
+        if (h != scoreH) {
+            scoreH = h
+            requestLayout()
+            invalidate()
+        }
+    }
 
     private val bmpPaint = Paint(Paint.FILTER_BITMAP_FLAG)
     private val ringPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }

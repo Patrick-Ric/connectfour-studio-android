@@ -1,0 +1,1 @@
+Connect Four with 15 levels, 20 boards, match mode and perfect analysis

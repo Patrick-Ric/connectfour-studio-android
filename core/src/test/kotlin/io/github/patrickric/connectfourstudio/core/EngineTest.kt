@@ -175,6 +175,11 @@ class EngineTest {
         assertEquals("1.234.567", Fmt.thousands(1_234_567, "de"))
         assertEquals("1 234 567", Fmt.thousands(1_234_567, "fr"))
         assertEquals("1,234,567", Fmt.thousands(1_234_567, "en"))
+        assertEquals("999", Fmt.thousands(999, "de"))
+        assertEquals("1.000", Fmt.thousands(1000, "de"))
+        assertEquals("0", Fmt.thousands(0, "en"))
+        assertEquals("-12,345", Fmt.thousands(-12345, "en"))
+        assertEquals("7.402.845", Fmt.thousands(7_402_845, "it"))
     }
 
     // ---------- match / session score

@@ -55,14 +55,23 @@ object Fmt {
             "fr" -> " "
             else -> ","
         }
-        return String.format(Locale.ROOT, "%,d", n).replace(",", sep)
+        // Grouped by hand: String.format("%,d") with Locale.ROOT throws
+        // "divide by zero" on Android 7 (grouping size 0 in its locale data).
+        val digits = Math.abs(n).toString()
+        val sb = StringBuilder(digits.length + digits.length / 3 + 1)
+        if (n < 0) sb.append('-')
+        for ((i, ch) in digits.withIndex()) {
+            if (i > 0 && (digits.length - i) % 3 == 0) sb.append(sep)
+            sb.append(ch)
+        }
+        return sb.toString()
     }
 
     fun decimal(txt: String, lang: String): String =
         if (lang in setOf("de", "es", "fr", "nl", "it")) txt.replace('.', ',') else txt
 
     /** Python `f"{x:.Nf}"` with a dot, independent of the device locale. */
-    fun fixed(x: Double, digits: Int): String = String.format(Locale.ROOT, "%.${digits}f", x)
+    fun fixed(x: Double, digits: Int): String = String.format(Locale.US, "%.${digits}f", x)
 
     /** Python `f"{x:g}"` for the values used here (multiples of 0.5). */
     fun g(x: Double): String {
@@ -71,7 +80,7 @@ object Fmt {
     }
 
     /** Python `f"{x:+.0f}"` (keeps the sign of -0.0 like Python). */
-    fun signed0(x: Double): String = String.format(Locale.ROOT, "%+.0f", x)
+    fun signed0(x: Double): String = String.format(Locale.US, "%+.0f", x)
 }
 
 internal object BigDecimalHelper {

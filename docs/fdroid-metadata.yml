@@ -1,0 +1,43 @@
+# Template for fdroiddata: metadata/io.github.patrickric.connectfourstudio.yml
+# (rename the file to the final application ID; adjust URLs, commit/tag).
+# Descriptions, icon, screenshots and changelogs come from fastlane/ in the
+# source repository, so they are not repeated here.
+
+Categories:
+  - Games
+License: AGPL-3.0-only
+AuthorName: Patrick Götz
+SourceCode: https://github.com/Patrick-Ric/connectfour-studio-android
+IssueTracker: https://github.com/Patrick-Ric/connectfour-studio-android/issues
+Changelog: https://github.com/Patrick-Ric/connectfour-studio-android/releases
+
+AutoName: ConnectFour Studio
+
+RepoType: git
+Repo: https://github.com/Patrick-Ric/connectfour-studio-android.git
+
+Builds:
+  - versionName: 1.0.0
+    versionCode: 1
+    commit: v1.0.0
+    subdir: app
+    sudo:
+      # Gradle runs on JDK 21 (gradle/gradle-daemon-jvm.properties); only
+      # needed if the build server image does not provide it already.
+      - apt-get update
+      - apt-get install -y openjdk-21-jdk-headless
+      - update-alternatives --auto java
+    gradle:
+      - yes
+
+# Reproducible build: once a release APK signed by the developer is attached
+# to the GitHub release, F-Droid can verify it and publish it with the
+# developer signature. Then add (fill in the certificate SHA-256):
+#
+#   Binaries: https://github.com/Patrick-Ric/connectfour-studio-android/releases/download/v%v/ConnectFourStudio-%v.apk
+#   AllowedAPKSigningKeys: <sha256 of the signing certificate, lower case, no colons>
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 1.0.0
+CurrentVersionCode: 1

@@ -72,13 +72,18 @@ class HelpActivity : Activity() {
             setSingleLine(true)
             imeOptions = EditorInfo.IME_ACTION_SEARCH
             setOnEditorActionListener { _, actionId, ev ->
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                    (ev != null && ev.keyCode == KeyEvent.KEYCODE_ENTER && ev.action == KeyEvent.ACTION_DOWN)
-                ) {
-                    findNext()
-                    true
-                } else {
-                    false
+                when {
+                    // Hardware Enter: search on key down, also consume key up
+                    // (otherwise the focus jumps to the next paragraph).
+                    ev != null && ev.keyCode == KeyEvent.KEYCODE_ENTER -> {
+                        if (ev.action == KeyEvent.ACTION_DOWN) findNext()
+                        true
+                    }
+                    actionId == EditorInfo.IME_ACTION_SEARCH -> {
+                        findNext()
+                        true
+                    }
+                    else -> false
                 }
             }
         }
@@ -286,7 +291,8 @@ class HelpActivity : Activity() {
         b.view.post {
             val layout = b.view.layout ?: return@post
             val line = layout.getLineForOffset(start)
-            val y = b.holder.top + b.view.top + layout.getLineTop(line) - Math.round(24 * resources.displayMetrics.density)
+            val inner = if (b.holder !== b.view) b.view.top else 0 // TextView inside a HorizontalScrollView
+            val y = b.holder.top + inner + layout.getLineTop(line) - Math.round(24 * resources.displayMetrics.density)
             scroll.smoothScrollTo(0, maxOf(0, y))
             if (b.holder is HorizontalScrollView) {
                 b.holder.smoothScrollTo(maxOf(0, layout.getPrimaryHorizontal(start).toInt() - 40), 0)

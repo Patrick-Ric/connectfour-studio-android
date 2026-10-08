@@ -200,12 +200,19 @@ class Controller(private val app: CfsApp) {
 
     /** New language: texts and relabelling (desktop: `_relabel_all`). */
     fun setLanguage(code: String) {
+        val old = tx
         val wasReady = status in LANG_ORDER.map { app.texts(it).t("status_ready") }
         prefs.lang = code
         tx = app.texts()
         info["info_level"] = displayStufeLabel()
         if (stand.enabled) standDisplay = stand.display(tx)
         if (wasReady) status = tx.t("status_ready")
+        // Beyond the desktop: also translate the values derived from the state.
+        val n = history.size
+        if (info["info_depth"] == old.t("depth_full")) info["info_depth"] = tx.t("depth_full")
+        if (info["info_depth"]?.startsWith(old.t("depth_book")) == true) info["info_depth"] = engine.pliesText(n, tx)
+        if (info["info_book"] != DASH) info["info_book"] = engine.bookText(n, tx)
+        if (board.isGameOver() && !animRunning && match == null) finishInfo()
         notifyAll(PANEL or MENU or BOARD)
     }
 
@@ -430,6 +437,7 @@ class Controller(private val app: CfsApp) {
         val m = try {
             engine.pickMove(b, stufe, prog, abort = { cancel }, keepTt = blind)
         } catch (e: Exception) {
+            android.util.Log.w("cfs", "engine move failed", e)
             val err = e.message ?: e.toString()
             post { engineFailed(err) }
             return

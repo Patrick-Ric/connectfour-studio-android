@@ -231,7 +231,7 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
         onProgress: Progress? = null,
         abort: (() -> Boolean)? = null,
         keepTt: Boolean = false,
-        rng: Random = Random.Default,
+        rng: Random = newRng(),
     ): EngineMove {
         var (scores, nodes) = iterativeScores(board, ITER_DEPTHS, onProgress, abort, keepTt)
         if (scores.isEmpty()) {
@@ -358,7 +358,7 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
      * Move sequence with [n] stones and the wished result for the side to
      * move: [WISH_ANY] / [WISH_WIN] / [WISH_DRAW] / [WISH_LOSS].
      */
-    fun randomPosition(n: Int, wunsch: String, stop: (() -> Boolean)? = null, rng: Random = Random.Default): RandomResult {
+    fun randomPosition(n: Int, wunsch: String, stop: (() -> Boolean)? = null, rng: Random = newRng()): RandomResult {
         val want = when (wunsch) {
             WISH_WIN -> 1
             WISH_DRAW -> 0
@@ -380,6 +380,11 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
     }
 
     companion object {
+        private val seedCounter = java.util.concurrent.atomic.AtomicLong()
+
+        /** Fresh pseudo random generator per call (Kotlin XorWow, independent of the platform RNG). */
+        fun newRng(): Random = Random(System.nanoTime() xor (seedCounter.incrementAndGet() * -0x61c8864680b583ebL))
+
         const val LOSS_POWER = 8
         val ITER_DEPTHS = intArrayOf(4, 6, 8, 10, 12, 14, 16, 18, 20, -1)
         const val BOOK_NAME = "12-ply-dist"

@@ -20,7 +20,7 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private val density = resources.displayMetrics.density
     private val margin = Math.round(8 * density)
     private val barGap = Math.round(2 * density)
-    private val barH = Math.round(48 * density)
+    private var barH = Math.round(48 * density)
 
     var widthFraction = 1f
     var heightFraction = 1f
@@ -47,7 +47,15 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
     }
 
-    private fun extraH(): Int = 2 * margin + board.scoreH + barGap + barH
+    private val scoreMin = 26 * density
+    private val scoreMax = 44 * density
+    private val barMin = 32 * density
+    private val barMax = 48 * density
+
+    /** Evaluation row and button heights for a cell size (full size unless space is tight). */
+    private fun scoreFor(cell: Int): Int = Math.round((cell * 0.5f).coerceIn(scoreMin, scoreMax))
+    private fun barFor(cell: Int): Int = Math.round((cell * 0.6f).coerceIn(barMin, barMax))
+    private fun needH(cell: Int): Int = Game.ROWS * cell + scoreFor(cell) + barFor(cell) + 2 * margin + barGap
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val wMode = MeasureSpec.getMode(widthMeasureSpec)
@@ -56,7 +64,10 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         val h = MeasureSpec.getSize(heightMeasureSpec)
         val availW = if (wMode == MeasureSpec.UNSPECIFIED) Int.MAX_VALUE / 4 else (w * widthFraction).toInt()
         val availH = if (hMode == MeasureSpec.UNSPECIFIED) Int.MAX_VALUE / 4 else (h * heightFraction).toInt()
-        val cell = maxOf(8, minOf((availW - 2 * margin) / Game.COLS, (availH - extraH()) / Game.ROWS))
+        var cell = maxOf(8, (availW - 2 * margin) / Game.COLS)
+        while (cell > 8 && needH(cell) > availH) cell--
+        barH = barFor(cell)
+        board.setScoreHeight(scoreFor(cell))
         board.setCell(cell)
         board.measure(
             MeasureSpec.makeMeasureSpec(board.boardW(), MeasureSpec.EXACTLY),
@@ -69,7 +80,7 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             )
         }
         val needW = board.boardW() + 2 * margin
-        val needH = board.canvasH() + extraH() - board.scoreH
+        val needH = needH(cell)
         val mw = if (wMode == MeasureSpec.EXACTLY) w else minOf(needW, if (wMode == MeasureSpec.AT_MOST) w else needW)
         val mh = if (hMode == MeasureSpec.EXACTLY) h else minOf(needH, if (hMode == MeasureSpec.AT_MOST) h else needH)
         setMeasuredDimension(mw, mh)
@@ -90,7 +101,7 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 /** Button whose single-line text shrinks to fit its width (no AppCompat autosize on API 21). */
 class FitButton(context: Context) : Button(context) {
     private val maxSp = 15f
-    private val minSp = 8f
+    private val minSp = 7f
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -103,7 +114,7 @@ class FitButton(context: Context) : Button(context) {
     }
 
     private fun fit() {
-        val avail = width - paddingLeft - paddingRight - Math.round(8 * resources.displayMetrics.density)
+        val avail = width - paddingLeft - paddingRight - Math.round(4 * resources.displayMetrics.density)
         if (avail <= 0) return
         var sp = maxSp
         val p = android.graphics.Paint(paint)

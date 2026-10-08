@@ -5,6 +5,11 @@
         <item name="android:colorPrimaryDark">@color/cfs_blue_dark</item>
         <item name="android:colorAccent">@color/cfs_blue</item>
         <item name="android:windowBackground">@color/window_bg</item>
+        <item name="android:alertDialogTheme">@style/AlertTheme</item>
+    </style>
+
+    <style name="AlertTheme" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/cfs_blue</item>
     </style>
 
     <!-- Framed group like the QGroupBox of the desktop version -->

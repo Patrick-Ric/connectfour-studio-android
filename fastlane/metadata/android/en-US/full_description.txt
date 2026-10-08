@@ -1,0 +1,34 @@
+<p>ConnectFour Studio is a free, offline Connect Four program: play against the computer, analyse positions and run engine-versus-engine matches. It is the Android version of the desktop program of the same name, with the same engine, levels, help and texts.</p>
+
+<p><b>Engine</b></p>
+<ul>
+<li>Perfect play: a Kotlin port of the BitBully solver by Markus Thill (bitboards, MTD(f), transposition table) with the 12-ply opening book with distances – identical results to the original C++ engine</li>
+<li>15 levels: 0 Loser (joke level), 1 Random … 14 Perfect, defined by (p, s, w): share of perfect moves, loss guard and win guard</li>
+<li>Two custom levels User (1) and User (2) with your own (p, s, w)</li>
+</ul>
+
+<p><b>Analysis</b></p>
+<ul>
+<li>Evaluation row under the board: win / draw / loss for every column and the number of stones until the end</li>
+<li>Permanent analysis after every move, one-off evaluation of all moves</li>
+<li>Info box with depth, value, nodes, time, speed and source (book or computed)</li>
+</ul>
+
+<p><b>Game modes</b></p>
+<ul>
+<li>Human vs. computer (the computer can also open), two players, computer plays out the position</li>
+<li>Computer-computer match with up to 10,000 games, colour swap, three speeds, Elo difference and copyable result</li>
+<li>Session score human vs. computer per level with Elo estimate</li>
+<li>Random start positions with 1–9 stones and a chosen result</li>
+</ul>
+
+<p><b>More</b></p>
+<ul>
+<li>20 boards with matching stones, ghost stone, drop animation, last move and winning line marked</li>
+<li>Load and save positions as .4gp files (compatible with the desktop version), quick save</li>
+<li>Detailed help with search and zoom, user interface in English, German, French, Spanish, Dutch and Italian</li>
+<li>Portrait and landscape, phones and tablets, keyboard shortcuts with a hardware keyboard</li>
+<li>No permissions, no internet access, no ads, no tracking</li>
+</ul>
+
+<p>License: GNU AGPL v3. Engine: BitBully by Markus Thill (AGPL v3), opening book: bitbully-databases (MIT).</p>
