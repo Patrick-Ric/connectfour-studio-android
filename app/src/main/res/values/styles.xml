@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/cfs_blue</item>
+        <item name="android:colorPrimaryDark">@color/cfs_blue_dark</item>
+        <item name="android:colorAccent">@color/cfs_blue</item>
+        <item name="android:windowBackground">@color/window_bg</item>
+    </style>
+
+    <!-- Framed group like the QGroupBox of the desktop version -->
+    <style name="Box">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/box_bg</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
+    <style name="BoxTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/help_head</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="InfoLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_hint</item>
+        <item name="android:paddingEnd">8dp</item>
+    </style>
+
+    <style name="InfoValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_main</item>
+    </style>
+
+    <style name="PswField">
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">3</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="MatchButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+</resources>

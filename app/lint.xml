@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- The UI texts are taken verbatim from cfs_core (desktop version), including
+         "..." and "-" (e.g. "Neu mit Zufallsstellung...", "Gelb (..) - Rot (..)").
+         They stay identical to the desktop program on purpose. -->
+    <issue id="TypographyEllipsis" severity="ignore" />
+    <issue id="TypographyDashes" severity="ignore" />
+    <!-- Distributed as APK (F-Droid), never as app bundle: all languages are in the APK,
+         the in-app language choice needs no Play Core download. -->
+    <issue id="AppBundleLocaleChanges" severity="ignore" />
+</lint>

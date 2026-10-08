@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/score_box"
+    style="@style/Box">
+
+    <TextView
+        android:id="@+id/score_title"
+        style="@style/BoxTitle" />
+
+    <TextView
+        android:id="@+id/stand_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_main"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/stand_big"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/text_main"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/stand_sub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/text_main"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/stand_elo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/text_main"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/stand_toggle"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/stand_reset"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backup and device transfer (Android 12+): settings and quick save only. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="sharedpref" path="settings.xml" />
+        <include domain="file" path="quicksave.4gp" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="sharedpref" path="settings.xml" />
+        <include domain="file" path="quicksave.4gp" />
+    </device-transfer>
+</data-extraction-rules>

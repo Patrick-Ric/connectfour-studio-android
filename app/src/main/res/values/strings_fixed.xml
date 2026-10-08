@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Texts that are identical in every language (as on the desktop). -->
+<resources>
+    <string name="user1_psw" translatable="false">User (1) p,s,w:</string>
+    <string name="user2_psw" translatable="false">User (2) p,s,w:</string>
+</resources>

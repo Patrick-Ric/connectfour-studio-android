@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/info_box"
+    style="@style/Box">
+
+    <TextView
+        android:id="@+id/info_title"
+        style="@style/BoxTitle" />
+
+    <TableLayout
+        android:id="@+id/info_rows"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="1" />
+</LinearLayout>

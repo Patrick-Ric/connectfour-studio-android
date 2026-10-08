@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Blue of the program icon -->
+    <color name="cfs_blue">#1E50BE</color>
+    <color name="cfs_blue_dark">#173E94</color>
+    <color name="window_bg">#F2F2F2</color>
+    <color name="box_border">#C4C4C4</color>
+    <color name="text_main">#202020</color>
+    <color name="text_hint">#707070</color>
+    <color name="help_head">#1E3A8A</color>
+</resources>

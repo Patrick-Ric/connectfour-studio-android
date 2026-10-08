@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView android:id="@+id/lab_yellow" style="@style/InfoValue" />
+
+        <Spinner
+            android:id="@+id/spin_yellow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView android:id="@+id/lab_red" style="@style/InfoValue" />
+
+        <Spinner
+            android:id="@+id/spin_red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/lab_games"
+            style="@style/InfoValue"
+            android:labelFor="@id/edit_games"
+            android:text="@string/match_games" />
+
+        <EditText
+            android:id="@+id/edit_games"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="5"
+            tools:targetApi="26" />
+
+        <CheckBox
+            android:id="@+id/check_swap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView android:id="@+id/lab_tempo" style="@style/InfoValue" />
+
+        <RadioGroup
+            android:id="@+id/tempo_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_fast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_turbo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/lab_user1"
+            style="@style/InfoValue"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/u1_p"
+            android:text="@string/user1_psw" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/u1_p"
+                style="@style/PswField"
+                android:hint="p"
+                android:importantForAutofill="no"
+                tools:ignore="HardcodedText"
+                tools:targetApi="26" />
+            <EditText
+                android:id="@+id/u1_s"
+                style="@style/PswField"
+                android:hint="s"
+                android:importantForAutofill="no"
+                tools:ignore="HardcodedText"
+                tools:targetApi="26" />
+            <EditText
+                android:id="@+id/u1_w"
+                style="@style/PswField"
+                android:hint="w"
+                android:importantForAutofill="no"
+                tools:ignore="HardcodedText"
+                tools:targetApi="26" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lab_user2"
+            style="@style/InfoValue"
+            android:labelFor="@id/u2_p"
+            android:text="@string/user2_psw" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/u2_p"
+                style="@style/PswField"
+                android:hint="p"
+                android:importantForAutofill="no"
+                tools:ignore="HardcodedText"
+                tools:targetApi="26" />
+            <EditText
+                android:id="@+id/u2_s"
+                style="@style/PswField"
+                android:hint="s"
+                android:importantForAutofill="no"
+                tools:ignore="HardcodedText"
+                tools:targetApi="26" />
+            <EditText
+                android:id="@+id/u2_w"
+                style="@style/PswField"
+                android:hint="w"
+                android:importantForAutofill="no"
+                tools:ignore="HardcodedText"
+                tools:targetApi="26" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/hint"
+            style="@style/InfoLabel"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/live"
+            style="@style/InfoValue"
+            android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:id="@+id/lab_result"
+            style="@style/InfoValue"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/result"
+            style="@style/InfoValue"
+            android:layout_width="match_parent"
+            android:background="@drawable/box_bg"
+            android:minLines="4"
+            android:padding="8dp"
+            android:textIsSelectable="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <Button android:id="@+id/btn_start" style="@style/MatchButton" />
+            <Button android:id="@+id/btn_stop" style="@style/MatchButton" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button android:id="@+id/btn_copy" style="@style/MatchButton" />
+            <Button android:id="@+id/btn_close" style="@style/MatchButton" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backup (Android 6-11): settings and quick save only; the decoded opening book
+     lives in no_backup and is rebuilt from the APK. -->
+<full-backup-content>
+    <include domain="sharedpref" path="settings.xml" />
+    <include domain="file" path="quicksave.4gp" />
+</full-backup-content>
