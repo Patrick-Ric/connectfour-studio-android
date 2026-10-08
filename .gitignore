@@ -1,0 +1,22 @@
+# Gradle / Android Studio
+.gradle/
+build/
+/local.properties
+/captures/
+.externalNativeBuild/
+.cxx/
+*.iml
+.idea/
+.kotlin/
+
+# Signing material never belongs in the repository
+*.jks
+*.keystore
+keystore.properties
+
+# Python caches of the generator scripts
+__pycache__/
+*.pyc
+
+# Local test output (screenshots, logs)
+/out/
