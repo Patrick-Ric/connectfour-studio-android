@@ -174,7 +174,10 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
 - **M1 Layout:** Ein Telefon hat kein frei skalierbares Fenster. Im Hochformat
   steht das Brett oben (max. 70 % der Höhe), die drei Felder darunter in zwei
   Spalten; im Querformat links/rechts wie am Desktop. Die Felder scrollen,
-  wenn der Platz nicht reicht.
+  wenn der Platz nicht reicht. Im Querformat auf Telefonen (Höhe < 480 dp)
+  ist die Aktionsleiste ausgeblendet; das Menü öffnet ein ⋮-Button oben in der
+  rechten Spalte, die Statuszeile steht dort unten – das Brett wird so etwa
+  ein Drittel größer. Leere Zeilen des Spielstands werden ausgeblendet.
 - **M2 Ghost-Stein per Finger:** Touch hat kein „Überfahren“. Der Ghost-Stein
   erscheint beim Berühren und folgt dem Finger; gezogen wird beim Loslassen,
   Herausschieben aus dem Brett bricht ab. Ein einfaches Antippen zieht sofort.

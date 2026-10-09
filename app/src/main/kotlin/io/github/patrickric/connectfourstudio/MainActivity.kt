@@ -8,6 +8,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -19,9 +20,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.NumberPicker
+import android.widget.PopupMenu
 import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TableLayout
@@ -62,6 +65,7 @@ class MainActivity : Activity(), Controller.Listener {
         title = getString(R.string.app_name)
         setContentView(R.layout.activity_main)
         bindViews()
+        setupCompactLandscape()
         c.addListener(this)
         onUpdate(ALL)
         savedInstanceState?.let {
@@ -91,6 +95,25 @@ class MainActivity : Activity(), Controller.Listener {
         dialogKey?.let { outState.putString("dialog", it) }
         outState.putInt("random_n", randomN)
         outState.putInt("random_wish", randomWish)
+    }
+
+    /**
+     * Landscape on phones: the action bar would take a sixth of the height, so
+     * it is hidden and the menu opens from a button in the right column.
+     */
+    private fun setupCompactLandscape() {
+        val cfg = resources.configuration
+        val btn = findViewById<ImageButton>(R.id.menu_button) ?: return
+        val compact = cfg.orientation == Configuration.ORIENTATION_LANDSCAPE && cfg.screenHeightDp < COMPACT_HEIGHT_DP
+        if (!compact) return
+        actionBar?.hide()
+        btn.visibility = View.VISIBLE
+        btn.setOnClickListener {
+            val popup = PopupMenu(this, btn)
+            buildMenu(popup.menu)
+            popup.setOnMenuItemClickListener { onOptionsItemSelected(it) }
+            popup.show()
+        }
     }
 
     private fun bindViews() {
@@ -523,6 +546,7 @@ class MainActivity : Activity(), Controller.Listener {
     }
 
     companion object {
+        private const val COMPACT_HEIGHT_DP = 480
         private const val ALL = Controller.BOARD or Controller.PANEL or Controller.MENU
         private const val REQ_OPEN = 1
         private const val REQ_SAVE = 2

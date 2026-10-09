@@ -231,4 +231,5 @@
     <string name="a_no_file_app">No se encontró ninguna app para elegir archivos.</string>
     <string name="a_copied">Copiado al portapapeles.</string>
     <string name="a_lang_system">Idioma del sistema</string>
+    <string name="a_menu">Menú</string>
 </resources>

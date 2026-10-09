@@ -61,6 +61,8 @@ ANDROID_STRINGS = {
     "a_lang_system": {
         "de": "Systemsprache", "en": "System language", "fr": "Langue du système",
         "es": "Idioma del sistema", "nl": "Systeemtaal", "it": "Lingua di sistema"},
+    "a_menu": {
+        "de": "Menü", "en": "Menu", "fr": "Menu", "es": "Menú", "nl": "Menu", "it": "Menu"},
 }
 
 # Info text: the desktop lines about Python/Qt replaced by the Android port.

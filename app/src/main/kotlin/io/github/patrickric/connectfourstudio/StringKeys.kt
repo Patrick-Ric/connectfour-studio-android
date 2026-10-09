@@ -234,5 +234,6 @@ internal object StringKeys {
         "a_no_file_app" to R.string.a_no_file_app,
         "a_copied" to R.string.a_copied,
         "a_lang_system" to R.string.a_lang_system,
+        "a_menu" to R.string.a_menu,
     )
 }

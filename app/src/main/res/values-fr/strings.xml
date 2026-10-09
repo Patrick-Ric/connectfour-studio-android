@@ -231,4 +231,5 @@
     <string name="a_no_file_app">Aucune application de sélection de fichiers trouvée.</string>
     <string name="a_copied">Copié dans le presse-papiers.</string>
     <string name="a_lang_system">Langue du système</string>
+    <string name="a_menu">Menu</string>
 </resources>

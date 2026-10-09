@@ -1,49 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Landscape: board left (sized to the height), info boxes right, status line at the bottom. -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Landscape: board left over the full height, right column with menu button
+     (used when the action bar is hidden on low screens), info boxes in two
+     columns and the status line. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal">
 
-    <include
-        layout="@layout/status_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <io.github.patrickric.connectfourstudio.BoardArea
+        android:id="@+id/board_area"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_above="@+id/status"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+        app:heightFraction="1.0"
+        app:widthFraction="0.66" />
 
-        <io.github.patrickric.connectfourstudio.BoardArea
-            android:id="@+id/board_area"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:heightFraction="1.0"
-            app:widthFraction="0.66" />
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/menu_button"
+            style="?android:attr/actionOverflowButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/a_menu"
+            android:visibility="gone"
+            tools:ignore="InconsistentLayout" />
+
+        <include
+            layout="@layout/status_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
 
         <ScrollView
             android:id="@+id/panel_scroll"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_above="@+id/status"
+            android:layout_below="@id/menu_button"
+            android:layout_alignWithParentIfMissing="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
                 android:paddingTop="8dp"
                 android:paddingEnd="8dp">
 
-                <include layout="@layout/box_turn" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <include layout="@layout/box_info" />
+                    <include layout="@layout/box_turn" />
 
-                <include layout="@layout/box_score" />
+                    <include layout="@layout/box_score" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/box_info" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

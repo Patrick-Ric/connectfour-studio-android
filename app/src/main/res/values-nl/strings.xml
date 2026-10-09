@@ -231,4 +231,5 @@
     <string name="a_no_file_app">Geen app gevonden om een bestand te kiezen.</string>
     <string name="a_copied">Naar het klembord gekopieerd.</string>
     <string name="a_lang_system">Systeemtaal</string>
+    <string name="a_menu">Menu</string>
 </resources>
