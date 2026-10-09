@@ -3,6 +3,12 @@
 *Open-source Connect Four with 15 levels, 20 boards, match mode, session score
 and perfect real-time analysis – the Android version of ConnectFour Studio.*
 
+<p>
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_analysis.png" width="260" alt="Analysis">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_ochre.png" width="260" alt="Stone set Ochre">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_walnut_amber_ruby.png" width="260" alt="Stone set Walnut-Amber-Ruby">
+</p>
+
 - **Engine:** Kotlin port of BitBully by Markus Thill (bitbully 0.0.79, C++
   core) with the 12-ply-dist opening book – same scores *and* node counts as
   the original engine (checked by the unit tests)
