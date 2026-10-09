@@ -57,7 +57,8 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
 - [~] Computer-Computer Match… – eigener Bildschirm statt nicht-modalem Fenster (M8) (E)
 - [x] Stop Auto Play
 - [x] vorheriges Set / nächstes Set
-- [~] 20 Stein-Sets – Auswahlliste „Stein-Set N – Name“ im Dialog (M5)
+- [~] 20 Stein-Sets – Auswahlliste „Stein-Set N – Name“ im Dialog, je Eintrag Vorschau (leeres Feld, gelber und roter Stein) in Originalgröße der Brettfelder (M5)
+- [~] Neu: Zwei-Finger-Wisch über das Brett wechselt das Set (links = nächstes, rechts = vorheriges; Gegenstück zum Mausrad, ein Finger bleibt fürs Ziehen) (M2)
 
 ## 6. Menü „Kommandos“
 

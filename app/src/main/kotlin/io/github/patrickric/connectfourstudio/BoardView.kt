@@ -62,6 +62,18 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private val winGrid = BooleanArray(Game.ROWS * Game.COLS)
     private var touching = false
 
+    // Two-finger swipe = next/previous stone set (desktop: mouse wheel).
+    private var multi = false
+    private var swipeStartX = 0f
+    private var swipeDone = false
+    private val swipeThreshold = SWIPE_DP * density
+
+    private fun avgX(ev: MotionEvent): Float {
+        var sum = 0f
+        for (i in 0 until ev.pointerCount) sum += ev.getX(i)
+        return sum / ev.pointerCount
+    }
+
     fun boardW(): Int = Game.COLS * cell
     fun boardH(): Int = Game.ROWS * cell
     fun canvasH(): Int = boardH() + scoreH
@@ -108,12 +120,35 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         val x = ev.x / scale
         val y = ev.y / scale
         when (ev.actionMasked) {
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                // Second finger: no move any more, track the swipe instead.
+                if (ev.pointerCount == 2) {
+                    multi = true
+                    touching = false
+                    swipeDone = false
+                    swipeStartX = avgX(ev)
+                    c.setHover(null)
+                }
+                return true
+            }
+            MotionEvent.ACTION_POINTER_UP -> return true
             MotionEvent.ACTION_DOWN -> {
+                multi = false
                 touching = true
                 if (y < boardH()) c.setHover(colFromX(x)) else c.setHover(null)
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
+                if (multi) {
+                    if (!swipeDone && ev.pointerCount >= 2) {
+                        val dx = avgX(ev) - swipeStartX
+                        if (Math.abs(dx) >= swipeThreshold) {
+                            swipeDone = true // one set per swipe
+                            c.cycleSet(if (dx < 0) +1 else -1) // left = next, right = previous
+                        }
+                    }
+                    return true
+                }
                 if (!touching) return true
                 if (!inside) {
                     touching = false // slid off the board: cancel
@@ -124,6 +159,10 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 return true
             }
             MotionEvent.ACTION_UP -> {
+                if (multi) {
+                    multi = false // end of a two-finger gesture: never a move
+                    return true
+                }
                 val wasTouching = touching
                 touching = false
                 if (ev.getToolType(0) != MotionEvent.TOOL_TYPE_MOUSE) c.setHover(null)
@@ -136,6 +175,7 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 return true
             }
             MotionEvent.ACTION_CANCEL -> {
+                multi = false
                 touching = false
                 c.setHover(null)
                 return true
@@ -286,5 +326,6 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     companion object {
         const val SCORE_H_DP = 44f
         const val SCORE_GAP_DP = 4f
+        const val SWIPE_DP = 60f
     }
 }

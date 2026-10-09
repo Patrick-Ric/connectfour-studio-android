@@ -18,13 +18,16 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.PopupMenu
+import android.widget.RadioButton
 import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TableLayout
@@ -352,20 +355,64 @@ class MainActivity : Activity(), Controller.Listener {
         )
     }
 
+    /**
+     * Stone sets with preview: full name, below it empty field, yellow and red
+     * stone in the size of the board's cells (not scaled down).
+     */
     private fun showSetDialog() {
+        val boardCell = Math.round(area.board.cell * area.board.scale)
+        if (area.board.width == 0) {
+            area.post { showSetDialog() } // after recreation: wait for the board layout
+            return
+        }
         val ids = c.sets.order
-        val items = ids.map { t.tf("set_menu_item", "no" to it, "name" to t.setName(it)) }.toTypedArray()
-        show(
-            "set",
-            AlertDialog.Builder(this)
-                .setTitle(t.t("stone_set"))
-                .setSingleChoiceItems(items, ids.indexOf(c.setNo)) { d, which ->
-                    d.dismiss()
-                    c.switchSet(ids[which])
+        val dp = resources.displayMetrics.density
+        val adapter = object : BaseAdapter() {
+            override fun getCount(): Int = ids.size
+            override fun getItem(position: Int): Any = ids[position]
+            override fun getItemId(position: Int): Long = ids[position].toLong()
+
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val row = convertView as? LinearLayout ?: setRow(dp)
+                val no = ids[position]
+                (row.getChildAt(0) as LinearLayout).let { col ->
+                    (col.getChildAt(0) as TextView).text = t.tf("set_menu_item", "no" to no, "name" to t.setName(no))
+                    (col.getChildAt(1) as ImageView).setImageBitmap(c.sets.preview(no, boardCell))
                 }
-                .setNegativeButton(t.t("btn_cancel"), null)
-                .create(),
-        )
+                (row.getChildAt(1) as RadioButton).isChecked = no == c.setNo
+                return row
+            }
+        }
+        val d = AlertDialog.Builder(this)
+            .setTitle(t.t("stone_set"))
+            .setAdapter(adapter) { _, which -> c.switchSet(ids[which]) }
+            .setNegativeButton(t.t("btn_cancel"), null)
+            .create()
+        show("set", d)
+        d.listView?.setSelection(ids.indexOf(c.setNo).coerceAtLeast(0))
+    }
+
+    private fun setRow(dp: Float): LinearLayout {
+        val row = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(Math.round(20 * dp), Math.round(8 * dp), Math.round(12 * dp), Math.round(8 * dp))
+        }
+        val col = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        col.addView(TextView(this).apply {
+            textSize = 16f
+            setPadding(0, 0, 0, Math.round(4 * dp))
+        })
+        col.addView(ImageView(this).apply {
+            scaleType = ImageView.ScaleType.CENTER
+            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT))
+        row.addView(col, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        row.addView(RadioButton(this).apply {
+            isClickable = false
+            isFocusable = false
+        })
+        return row
     }
 
     private fun showLanguageDialog() {

@@ -91,4 +91,33 @@ class StoneSets(private val context: Context) {
     }
 
     fun stoneTile(no: Int, stone: Stone, size: Int): Bitmap = tile(no, stone.id, size)
+
+    private val previews = object : android.util.LruCache<String, Bitmap>(PREVIEW_CACHE_BYTES) {
+        override fun sizeOf(key: String, value: Bitmap): Int = value.byteCount
+    }
+
+    /**
+     * Preview of set [no] for the set dialog: empty field, yellow and red
+     * stone side by side, each [size] px (the current board cell). Decoded
+     * separately, so the tiles of the current set stay cached for the board.
+     */
+    fun preview(no: Int, size: Int): Bitmap {
+        val s = maxOf(1, size)
+        val key = "$no/$s"
+        previews.get(key)?.let { return it }
+        val opts = BitmapFactory.Options().apply { inScaled = false }
+        val out = Bitmap.createBitmap(3 * s, s, Bitmap.Config.ARGB_8888)
+        val c = Canvas(out)
+        val p = Paint(Paint.FILTER_BITMAP_FLAG or Paint.ANTI_ALIAS_FLAG)
+        for ((i, name) in listOf("back", "yellow", "red").withIndex()) {
+            val src = context.assets.open("sets/set$no/$name.webp").use { BitmapFactory.decodeStream(it, null, opts)!! }
+            c.drawBitmap(halved(src, s), null, Rect(i * s, 0, (i + 1) * s, s), p)
+        }
+        previews.put(key, out)
+        return out
+    }
+
+    companion object {
+        private const val PREVIEW_CACHE_BYTES = 8 shl 20
+    }
 }

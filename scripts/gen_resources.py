@@ -205,7 +205,9 @@ HELP_ANDROID = {
         "Tablet gilt sinngemäß „Tippen“ statt „Klicken“: Ein Fingertipp auf eine Spalte des "
         "Brettes oder auf ein Feld der Wertungszeile wirft dort einen Stein ein. Solange der "
         "Finger auf dem Brett liegt, zeigt der Ghost-Stein die Landeposition; gezogen wird beim "
-        "Loslassen. Wer den Finger aus dem Brett hinausschiebt, bricht den Zug ab.",
+        "Loslassen. Wer den Finger aus dem Brett hinausschiebt, bricht den Zug ab. Ein Wisch "
+        "mit zwei Fingern über das Brett wechselt das Stein-Set (nach links: nächstes, nach "
+        "rechts: vorheriges); Einstellungen > Stein-Set … zeigt eine Vorschau aller Bretter.",
         "Die Menüs Datei, Ansicht, Einstellungen, Kommandos und Hilfe öffnen sich über das "
         "Drei-Punkte-Menü (⋮) oben rechts. Computer-Stufe, Stein-Set und Sprache werden dort "
         "in einer Auswahlliste gewählt. Das Computer-Computer Match hat einen eigenen "
@@ -223,7 +225,8 @@ HELP_ANDROID = {
         "“tap” for “click”: tapping a column of the board or a field of the evaluation row drops "
         "a stone there. While your finger rests on the board, the ghost stone shows where the "
         "stone will land; the move is made when you lift the finger. Sliding the finger off the "
-        "board cancels the move.",
+        "board cancels the move. A two-finger swipe across the board changes the stone set "
+        "(left: next, right: previous); Settings > Stone set … shows a preview of every board.",
         "The File, View, Settings, Commands and Help menus open from the three-dot menu (⋮) at "
         "the top right. Computer level, stone set and language are chosen there from a list. The "
         "computer-computer match has its own screen; “Back” returns to the board while the match "
@@ -241,7 +244,9 @@ HELP_ANDROID = {
         "tablette, lisez « toucher » au lieu de « cliquer » : toucher une colonne du plateau ou "
         "une case de la ligne d'évaluation y fait tomber un pion. Tant que le doigt reste sur le "
         "plateau, le pion fantôme indique où le pion atterrira ; le coup est joué quand le doigt "
-        "se lève. Faire glisser le doigt hors du plateau annule le coup.",
+        "se lève. Faire glisser le doigt hors du plateau annule le coup. Un glissement à deux "
+        "doigts sur le plateau change de jeu de pions (vers la gauche : suivant, vers la droite : "
+        "précédent) ; Paramètres > Jeu de pions … montre un aperçu de chaque plateau.",
         "Les menus Fichier, Affichage, Paramètres, Commandes et Aide s'ouvrent depuis le menu à "
         "trois points (⋮) en haut à droite. Le niveau de l'ordinateur, le jeu de pions et la "
         "langue y sont choisis dans une liste. Le match Ordinateur-Ordinateur a son propre "
@@ -261,7 +266,9 @@ HELP_ANDROID = {
         "lea «tocar» en lugar de «hacer clic»: tocar una columna del tablero o una casilla de "
         "la fila de evaluación deja caer una ficha allí. Mientras el dedo permanece sobre el "
         "tablero, la ficha fantasma muestra dónde caerá; la jugada se realiza al levantar el "
-        "dedo. Deslizar el dedo fuera del tablero cancela la jugada.",
+        "dedo. Deslizar el dedo fuera del tablero cancela la jugada. Deslizar dos dedos sobre el "
+        "tablero cambia el juego de fichas (a la izquierda: siguiente, a la derecha: anterior); "
+        "Configuración > Juego de fichas … muestra una vista previa de cada tablero.",
         "Los menús Archivo, Ver, Ajustes, Comandos y Ayuda se abren desde el menú de tres "
         "puntos (⋮) arriba a la derecha. El nivel del ordenador, el juego de fichas y el idioma "
         "se eligen allí de una lista. El partido Ordenador-Ordenador tiene su propia pantalla; "
@@ -280,7 +287,9 @@ HELP_ANDROID = {
         "„tikken” in plaats van „klikken”: tikken op een kolom van het bord of op een vak van de "
         "beoordelingsrij laat daar een steen vallen. Zolang de vinger op het bord ligt, toont de "
         "ghost-steen waar de steen landt; de zet wordt gedaan bij het loslaten. Wie de vinger "
-        "van het bord schuift, breekt de zet af.",
+        "van het bord schuift, breekt de zet af. Met twee vingers over het bord vegen wisselt de "
+        "steenset (naar links: volgende, naar rechts: vorige); Instellingen > Steenset … toont "
+        "een voorbeeld van elk bord.",
         "De menu's Bestand, Weergave, Instellingen, Commando's en Help openen via het "
         "driepuntsmenu (⋮) rechtsboven. Computerniveau, stenenset en taal worden daar uit een "
         "lijst gekozen. De computer-computerwedstrijd heeft een eigen scherm; „Terug” gaat naar "
@@ -298,7 +307,10 @@ HELP_ANDROID = {
         "si legga «toccare» invece di «fare clic»: toccando una colonna della scacchiera o una "
         "casella della riga di valutazione vi si fa cadere una pedina. Finché il dito resta "
         "sulla scacchiera, la pedina fantasma mostra dove atterrerà; la mossa avviene quando si "
-        "solleva il dito. Trascinando il dito fuori dalla scacchiera la mossa viene annullata.",
+        "solleva il dito. Trascinando il dito fuori dalla scacchiera la mossa viene annullata. "
+        "Scorrendo con due dita sulla scacchiera si cambia set di pietre (a sinistra: successivo, "
+        "a destra: precedente); Impostazioni > Set di pietre … mostra un'anteprima di ogni "
+        "scacchiera.",
         "I menu File, Visualizza, Impostazioni, Comandi e Aiuto si aprono dal menu a tre punti "
         "(⋮) in alto a destra. Livello del computer, set di pedine e lingua si scelgono lì da un "
         "elenco. La partita Computer-Computer ha una schermata propria; «Indietro» torna alla "
