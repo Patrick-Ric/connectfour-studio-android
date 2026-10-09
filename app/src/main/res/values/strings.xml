@@ -232,5 +232,6 @@
     <string name="a_no_file_app">No app found to pick a file.</string>
     <string name="a_copied">Copied to the clipboard.</string>
     <string name="a_lang_system">System language</string>
+    <string name="a_big_board">Large board</string>
     <string name="a_menu">Menu</string>
 </resources>

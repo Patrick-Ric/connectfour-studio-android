@@ -61,6 +61,9 @@ ANDROID_STRINGS = {
     "a_lang_system": {
         "de": "Systemsprache", "en": "System language", "fr": "Langue du système",
         "es": "Idioma del sistema", "nl": "Systeemtaal", "it": "Lingua di sistema"},
+    "a_big_board": {
+        "de": "Großes Brett", "en": "Large board", "fr": "Grand plateau",
+        "es": "Tablero grande", "nl": "Groot bord", "it": "Scacchiera grande"},
     "a_menu": {
         "de": "Menü", "en": "Menu", "fr": "Menu", "es": "Menú", "nl": "Menu", "it": "Menu"},
 }

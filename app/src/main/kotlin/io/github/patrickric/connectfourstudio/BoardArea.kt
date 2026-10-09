@@ -25,6 +25,18 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     var widthFraction = 1f
     var heightFraction = 1f
 
+    /** "Large board": no side margin, board may take more of the height. */
+    var large = false
+        set(v) {
+            if (v != field) {
+                field = v
+                requestLayout()
+            }
+        }
+
+    private val sideMargin: Int get() = if (large) 0 else margin
+    private val effHeightFraction: Float get() = if (large) maxOf(heightFraction, LARGE_HEIGHT_FRACTION) else heightFraction
+
     init {
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.BoardArea)
@@ -63,8 +75,8 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         val w = MeasureSpec.getSize(widthMeasureSpec)
         val h = MeasureSpec.getSize(heightMeasureSpec)
         val availW = if (wMode == MeasureSpec.UNSPECIFIED) Int.MAX_VALUE / 4 else (w * widthFraction).toInt()
-        val availH = if (hMode == MeasureSpec.UNSPECIFIED) Int.MAX_VALUE / 4 else (h * heightFraction).toInt()
-        var cell = maxOf(8, (availW - 2 * margin) / Game.COLS)
+        val availH = if (hMode == MeasureSpec.UNSPECIFIED) Int.MAX_VALUE / 4 else (h * effHeightFraction).toInt()
+        var cell = maxOf(8, (availW - 2 * sideMargin) / Game.COLS)
         while (cell > 8 && needH(cell) > availH) cell--
         barH = barFor(cell)
         board.setScoreHeight(scoreFor(cell))
@@ -79,7 +91,7 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 MeasureSpec.makeMeasureSpec(barH, MeasureSpec.EXACTLY),
             )
         }
-        val needW = board.boardW() + 2 * margin
+        val needW = board.boardW() + 2 * sideMargin
         val needH = needH(cell)
         val mw = if (wMode == MeasureSpec.EXACTLY) w else minOf(needW, if (wMode == MeasureSpec.AT_MOST) w else needW)
         val mh = if (hMode == MeasureSpec.EXACTLY) h else minOf(needH, if (hMode == MeasureSpec.AT_MOST) h else needH)
@@ -95,6 +107,10 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         for ((c, btn) in buttons.withIndex()) {
             btn.layout(left + c * cell, y, left + (c + 1) * cell, y + barH)
         }
+    }
+
+    companion object {
+        private const val LARGE_HEIGHT_FRACTION = 0.82f
     }
 }
 

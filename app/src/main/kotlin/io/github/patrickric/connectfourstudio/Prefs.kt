@@ -22,6 +22,10 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("show_last", true)
         set(v) = sp.edit().putBoolean("show_last", v).apply()
 
+    var bigBoard: Boolean
+        get() = sp.getBoolean("big_board", false)
+        set(v) = sp.edit().putBoolean("big_board", v).apply()
+
     var setNo: Int
         get() = sp.getInt("set_no", 1)
         set(v) = sp.edit().putInt("set_no", v).apply()

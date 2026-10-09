@@ -231,5 +231,6 @@
     <string name="a_no_file_app">Keine App zur Dateiauswahl gefunden.</string>
     <string name="a_copied">In die Zwischenablage kopiert.</string>
     <string name="a_lang_system">Systemsprache</string>
+    <string name="a_big_board">Großes Brett</string>
     <string name="a_menu">Menü</string>
 </resources>

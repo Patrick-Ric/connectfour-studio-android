@@ -74,6 +74,8 @@ class Controller(private val app: CfsApp) {
         private set
     var ghost = prefs.ghost
         private set
+    var bigBoard = prefs.bigBoard
+        private set
     var hoverCol: Int? = null
         private set
     var falling: Falling? = null
@@ -1199,6 +1201,13 @@ class Controller(private val app: CfsApp) {
         draw()
         savePrefs()
         notifyAll(MENU)
+    }
+
+    /** View > Large board (Android only): board without side margin. */
+    fun setBigBoard(v: Boolean) {
+        bigBoard = v
+        prefs.bigBoard = v
+        notifyAll(BOARD or MENU)
     }
 
     fun setAnim(v: Boolean) {

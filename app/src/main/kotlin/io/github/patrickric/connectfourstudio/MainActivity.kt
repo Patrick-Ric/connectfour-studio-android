@@ -145,7 +145,10 @@ class MainActivity : Activity(), Controller.Listener {
 
     // ------------------------------------------------------------ updates from the controller
     override fun onUpdate(flags: Int) {
-        if (flags and Controller.BOARD != 0) area.board.invalidate()
+        if (flags and Controller.BOARD != 0) {
+            area.large = c.bigBoard
+            area.board.invalidate()
+        }
         if (flags and Controller.PANEL != 0) updatePanel()
         if (flags and Controller.MENU != 0) invalidateOptionsMenu()
         if (flags and Controller.MATCH_FRONT != 0 && c.matchWinOpen) {
@@ -215,6 +218,7 @@ class MainActivity : Activity(), Controller.Listener {
         m.add(0, ID_GHOST, 0, t.t("ghost_stone")).setCheckable(true).isChecked = c.ghost
         m.add(0, ID_ANIM, 0, t.t("drop_animation")).setCheckable(true).isChecked = c.anim
         m.add(0, ID_SHOW_LAST, 0, t.t("show_last_move")).setCheckable(true).isChecked = c.showLast
+        m.add(0, ID_BIG_BOARD, 0, t.t("a_big_board")).setCheckable(true).isChecked = c.bigBoard
         m.add(0, ID_STAND, 0, t.t("score_onoff")).setCheckable(true).isChecked = c.stand.enabled
         m.add(0, ID_STAND_RESET, 0, t.t("score_reset"))
 
@@ -260,6 +264,7 @@ class MainActivity : Activity(), Controller.Listener {
             ID_GHOST -> c.setGhost(!c.ghost)
             ID_ANIM -> c.setAnim(!c.anim)
             ID_SHOW_LAST -> c.setShowLast(!c.showLast)
+            ID_BIG_BOARD -> c.setBigBoard(!c.bigBoard)
             ID_STAND -> c.standToggle()
             ID_STAND_RESET -> c.standReset()
             ID_LEVEL -> showLevelDialog()
@@ -564,6 +569,7 @@ class MainActivity : Activity(), Controller.Listener {
         private const val ID_ANIM = 202
         private const val ID_SHOW_LAST = 203
         private const val ID_STAND = 204
+        private const val ID_BIG_BOARD = 206
         private const val ID_STAND_RESET = 205
         private const val ID_LEVEL = 301
         private const val ID_MODE_HC = 302
