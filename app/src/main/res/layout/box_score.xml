@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textColor="@color/text_main"
-        android:textSize="40sp" />
+        android:textSize="34sp" />
 
     <TextView
         android:id="@+id/stand_sub"

@@ -157,10 +157,12 @@ class MainActivity : Activity(), Controller.Listener {
             infoValues[key]?.text = c.info[key]
         }
         val sd = c.standDisplay
-        findViewById<TextView>(R.id.stand_head).text = sd.head
-        findViewById<TextView>(R.id.stand_big).text = sd.big
-        findViewById<TextView>(R.id.stand_sub).text = sd.sub
-        findViewById<TextView>(R.id.stand_elo).text = sd.elo
+        // Empty lines are hidden, so the box stays small while the score is off.
+        for ((id, txt) in listOf(R.id.stand_head to sd.head, R.id.stand_big to sd.big, R.id.stand_sub to sd.sub, R.id.stand_elo to sd.elo)) {
+            val tv = findViewById<TextView>(id)
+            tv.text = txt
+            tv.visibility = if (txt.isEmpty()) View.GONE else View.VISIBLE
+        }
         status.text = c.status
     }
 
