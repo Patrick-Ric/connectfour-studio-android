@@ -3,6 +3,8 @@
 *Open-source Connect Four with 15 levels, 20 boards, match mode, session score
 and perfect real-time analysis – the Android version of ConnectFour Studio.*
 
+**Download:** [ConnectFourStudio-1.0.0.apk](https://github.com/Patrick-Ric/connectfour-studio-android/releases/latest) (Android 5.0+, 6.4 MB) – latest release with checksum; F-Droid inclusion pending.
+
 <p>
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_analysis_dark.png" width="260" alt="Analysis">
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_walnut_amber_ruby_no_analysis.png" width="260" alt="Stone set Walnut-Amber-Ruby, analysis off">
