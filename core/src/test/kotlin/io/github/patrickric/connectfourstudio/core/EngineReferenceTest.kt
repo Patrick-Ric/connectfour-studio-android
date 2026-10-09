@@ -41,10 +41,23 @@ class EngineReferenceTest {
                 assertEquals("moves=$moves depth=$depth", scoresOf(st["scores"].list()), sc)
                 assertEquals("nodes moves=$moves depth=$depth", st["nodes"] as Long, agent.nodeCounter)
             }
-            // The public API gives the same final result.
+            // The public API gives the same final result as the full search of
+            // the Python engine. Below 12 stones it stops at the first depth
+            // whose lines all reach the book (12 - stones): same scores, and
+            // exactly the node count of the Python search up to that depth.
             val (scores, nodes) = engine.iterativeScores(b)
-            assertEquals(scoresOf(stages.last()["scores"].list()), (0 until 7).map { scores[it] })
-            assertEquals(stages.last()["nodes"] as Long, nodes)
+            val finalScores = scoresOf(stages.last()["scores"].list())
+            assertEquals("final $moves", finalScores, (0 until 7).map { scores[it] })
+            val n = moves.size
+            if (n < 12) {
+                val stop = stages.first { (it["depth"] as Long).toInt().let { d -> d != -1 && d >= 12 - n } }
+                assertEquals("book stage exact $moves", finalScores, scoresOf(stop["scores"].list()))
+                assertEquals("nodes up to book $moves", stop["nodes"] as Long, nodes)
+                assertEquals(Engine.DEPTH_BOOK, engine.lastDepth)
+            } else {
+                assertEquals(stages.last()["nodes"] as Long, nodes)
+                assertEquals(-1, engine.lastDepth)
+            }
             assertEquals("mtdf $moves", (o["mtdf"] as Long).toInt(), engine.mtdf(b))
             for ((s, ml) in o["moves_left"].obj()) {
                 assertEquals((ml as Long).toInt(), BitBully.scoreToMovesLeft(s.toInt(), b))

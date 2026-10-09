@@ -428,7 +428,7 @@ class Controller(private val app: CfsApp) {
                 if (matchMode) {
                     post { setInfo("info_level", stufeTxt) }
                 } else {
-                    val label = if (depth == -1) t.t("depth_full") else depth.toString()
+                    val label = Engine.depthLabel(depth, t)
                     val kn = Fmt.thousands(nodes, t.lang)
                     val ms = maxOf(1L, Math.round(dt * 1000))
                     val kns = Engine.knsText(nodes, dt, t.lang)
@@ -885,7 +885,7 @@ class Controller(private val app: CfsApp) {
         if (seq != anaSeq || history != snap) return
         if ((requireAuto && !autoAnalyze) || board.isGameOver()) return
         showScores(scores, nodes, dt)
-        val label = if (depth == -1) tx.t("depth_full") else depth.toString()
+        val label = Engine.depthLabel(depth, tx)
         setInfo("info_depth", "$label...")
     }
 

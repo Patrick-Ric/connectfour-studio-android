@@ -58,6 +58,16 @@ Feature-Abgleich und mobile Abweichungen stehen in `FEATURES.md`.
 - **Abbruch:** Die Suche fragt alle 1024 Knoten das Abbruch-Flag ab (die
   C++-Engine konnte nur zwischen den Tiefen stoppen). Abgebrochene Tiefen
   werden verworfen, die Logik „letzte vollständige Tiefe zählt“ bleibt.
+- **Iteration endet am Buch (Abweichung vom Desktop):** Bei weniger als 12
+  Steinen erreicht jede Variante ab Tiefe 12 − Steinzahl das 12-ply-Buch; ab
+  dort sind die Werte exakt und jede weitere Tiefe (bis 20 und „Voll“)
+  wiederholte nur dieselbe Suche (der TT-Cache greift wegen der Tiefen-
+  Budgets nicht). Die Android-Version bricht dort ab und zeigt als Tiefe
+  „Buch 12d“. Bewertungen und Zugwahl sind identisch; in der Eröffnung
+  braucht die Analyse nur noch 10–28 % der Knoten (4–10× schneller). Die
+  Tests prüfen das an allen Referenzstellungen (gleiche Werte wie die volle
+  Python-Suche, Knotenzahl = Python-Suche bis zur Buchtiefe). Die Qt-Version
+  rechnet noch alle Tiefen.
 - **Fortschritt live:** Die Python-Version sammelte die Fortschrittsmeldungen
   bis zum Ende der Suche; hier werden sie sofort (gedrosselt auf 200 ms) aus
   dem Worker-Thread an die Oberfläche gemeldet.

@@ -121,7 +121,13 @@ class EngineTest {
         assertEquals((0 until 7).toList(), scores.cols)
         assertTrue(nodes > 0)
         assertTrue(seen.isNotEmpty())
-        assertEquals(-1, seen.last()) // last stage = full search
+        // 1 stone: stops as soon as every line reaches the 12-ply book
+        assertEquals(Engine.DEPTH_BOOK, seen.last())
+        assertEquals("Buch 12d", engine.pliesText(1, de))
+        seen.clear()
+        engine.iterativeScores(Game.boardFromMoves(Gp4.parse("4444443333332")), onProgress = { d, _, _, _ -> seen.add(d) })
+        assertEquals(-1, seen.last()) // 13 stones: last stage = full search
+        assertEquals("Voll", engine.pliesText(13, de))
         val (aborted, _) = engine.iterativeScores(board(3), abort = { true })
         assertTrue(aborted.isEmpty())
     }

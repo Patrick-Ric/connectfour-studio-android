@@ -99,7 +99,7 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
 - [x] 14 Stufen (p, s, w) + 0 Verlierer + Zufall-Sonderfall (T)
 - [x] Siegsschutz w, Verlustschutz s, Perfekt-Regeln, Verluststellungen (gewichtete Wahl Verlustlänge^8) (T)
 - [x] Analyse (F6/F7) immer perfekt
-- [x] Info „Quelle“: „Buch 12d“ bis 12 Steine, danach „berechnet“; „Tiefe“: letzte Iterationstiefe (T)
+- [~] Info „Quelle“: „Buch 12d“ bis 12 Steine, danach „berechnet“; „Tiefe“: letzte Iterationstiefe – unter 12 Steinen endet die Iteration, sobald alle Varianten das Buch erreichen (Tiefe „Buch 12d“, gleiche Werte, 4–10× schneller; Desktop rechnet weiter bis „Voll“) (T)
 - [~] Transpositionstabelle 2^22 Einträge wie C++, auf Geräten mit wenig Heap 2^21/2^20 (exakte Ergebnisse unverändert, nur andere Knotenzahlen) (M11)
 
 ## 11. Dauer-Analyse

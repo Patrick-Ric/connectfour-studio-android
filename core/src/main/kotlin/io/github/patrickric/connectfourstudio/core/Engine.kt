@@ -82,7 +82,7 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
     /** "Tiefe" display: last iteration depth or book horizon. */
     fun pliesText(nMoves: Int, tx: Texts): String {
         val d = lastDepth
-        if (d != null) return if (d == -1) tx.t("depth_full") else d.toString()
+        if (d != null) return depthLabel(d, tx)
         if (!isBookLoaded()) return "–"
         if (nMoves <= BOOK_HORIZON) return "${tx.t("depth_book")} $BOOK_SHORT"
         return "–"
@@ -182,6 +182,10 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
         var scores = Scores.EMPTY
         var nodes = 0L
         val stop = abort ?: { false }
+        // Below 12 stones every line ends in the 12-ply book once the depth
+        // reaches 12 - stones: from then on the scores are exact and deeper
+        // iterations only repeat the same search (Android only, see DECISIONS.md).
+        val bookDepth = if (isBookLoaded() && board.countTokens() < BOOK_HORIZON) BOOK_HORIZON - board.countTokens() else null
         lock.withLock {
             agent.resetNodeCounter()
             if (!keepTt) agent.resetTranspositionTable()
@@ -196,13 +200,15 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
                     }
                     scores = Scores(part)
                     nodes = agent.nodeCounter
-                    lastDepth = depth
+                    val bookDone = bookDepth != null && depth != -1 && depth >= bookDepth
+                    val shown = if (bookDone) DEPTH_BOOK else depth
+                    lastDepth = shown
                     val dt = (System.nanoTime() - t0) / 1e9
-                    if (onProgress != null && (depth == depths.last() || dt - lastCb >= 0.2)) {
+                    if (onProgress != null && (depth == depths.last() || bookDone || dt - lastCb >= 0.2)) {
                         lastCb = dt
-                        onProgress(depth, scores, nodes, dt)
+                        onProgress(shown, scores, nodes, dt)
                     }
-                    if (depth == -1) break
+                    if (depth == -1 || bookDone) break
                     if (stop()) break
                 }
             } finally {
@@ -390,6 +396,16 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
         const val BOOK_NAME = "12-ply-dist"
         const val BOOK_SHORT = "12d"
         const val BOOK_HORIZON = 12
+
+        /** Pseudo depth: iteration stopped because every line reached the book. */
+        const val DEPTH_BOOK = -2
+
+        /** "Tiefe" text: number, "Voll" (-1) or "Buch 12d" ([DEPTH_BOOK]). */
+        fun depthLabel(depth: Int, tx: Texts): String = when (depth) {
+            -1 -> tx.t("depth_full")
+            DEPTH_BOOK -> "${tx.t("depth_book")} $BOOK_SHORT"
+            else -> depth.toString()
+        }
 
         // Internal (German) keys of the random-position wish, as in the Python code.
         const val WISH_ANY = "Egal"
