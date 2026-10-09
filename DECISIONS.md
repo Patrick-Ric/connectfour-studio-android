@@ -58,17 +58,18 @@ Feature-Abgleich und mobile Abweichungen stehen in `FEATURES.md`.
 - **Abbruch:** Die Suche fragt alle 1024 Knoten das Abbruch-Flag ab (die
   C++-Engine konnte nur zwischen den Tiefen stoppen). Abgebrochene Tiefen
   werden verworfen, die Logik „letzte vollständige Tiefe zählt“ bleibt.
-- **Iteration endet am Buch (Abweichung vom Desktop):** Bei weniger als 12
+- **Iteration endet am Buch (seit 10/2026 auch in der Qt- und Tk-Version):** Bei weniger als 12
   Steinen erreicht jede Variante ab Tiefe 12 − Steinzahl das 12-ply-Buch; ab
   dort sind die Werte exakt und jede weitere Tiefe (bis 20 und „Voll“)
   wiederholte nur dieselbe Suche (der TT-Cache greift wegen der Tiefen-
-  Budgets nicht). Die Android-Version bricht dort ab und zeigt als Tiefe
+  Budgets nicht). Die Suche bricht dort ab und zeigt als Tiefe
   „Buch 12d“. Bewertungen und Zugwahl sind identisch; in der Eröffnung
   braucht die Analyse nur noch 10–28 % der Knoten (4–10× schneller). Die
   Tests prüfen das an allen Referenzstellungen (gleiche Werte wie die volle
-  Python-Suche, Knotenzahl = Python-Suche bis zur Buchtiefe). Die Qt-Version
-  rechnet noch alle Tiefen.
-- **Mini-Buch „Buch 2d“ (nur Android):** Für die 57 Stellungen mit 0–2
+  Python-Suche, Knotenzahl = Python-Suche bis zur Buchtiefe). Qt- und
+  Tk-Version wurden gleich umgestellt; Werte und Knotenzahlen sind in allen
+  drei Versionen identisch.
+- **Mini-Buch „Buch 2d“ (in allen drei Versionen):** Für die 57 Stellungen mit 0–2
   Steinen (Grundstellung, 7 nach dem ersten, 49 nach dem zweiten Halbzug) sind
   die exakten Bewertungen aller 7 Züge eingebaut (`MiniBookData.kt`, erzeugt
   mit der Original-Engine bitbully 0.0.79 per `scripts/gen_minibook.py`). Dort

@@ -186,7 +186,7 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
         val stop = abort ?: { false }
         // Below 12 stones every line ends in the 12-ply book once the depth
         // reaches 12 - stones: from then on the scores are exact and deeper
-        // iterations only repeat the same search (Android only, see DECISIONS.md).
+        // iterations only repeat the same search (same in the Qt and Tk versions).
         val bookDepth = if (isBookLoaded() && board.countTokens() < BOOK_HORIZON) BOOK_HORIZON - board.countTokens() else null
         // Up to two stones the exact scores come from the mini book "Buch 2d".
         val mini = MiniBook.scores(board)

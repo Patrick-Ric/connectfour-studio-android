@@ -1,7 +1,7 @@
 package io.github.patrickric.connectfourstudio.core.engine
 
 /**
- * "Buch 2d" (Android only): exact scores of all moves for the 57 positions
+ * "Buch 2d" (same data in the Qt and Tk versions): exact scores of all moves for the 57 positions
  * with up to two stones, so the start of a game needs no search at all.
  * Data from the original engine (scripts/gen_minibook.py); the unit tests
  * check them against the full search of this port.

@@ -99,8 +99,8 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
 - [x] 14 Stufen (p, s, w) + 0 Verlierer + Zufall-Sonderfall (T)
 - [x] Siegsschutz w, Verlustschutz s, Perfekt-Regeln, Verluststellungen (gewichtete Wahl Verlustlänge^8) (T)
 - [x] Analyse (F6/F7) immer perfekt
-- [~] Info „Quelle“: „Buch 12d“ bis 12 Steine, danach „berechnet“; „Tiefe“: letzte Iterationstiefe – unter 12 Steinen endet die Iteration, sobald alle Varianten das Buch erreichen (Tiefe „Buch 12d“, gleiche Werte, 4–10× schneller; Desktop rechnet weiter bis „Voll“) (T)
-- [~] Neu: Mini-Buch „Buch 2d“ – exakte Bewertungen der 57 Stellungen mit 0–2 Steinen eingebaut, dort keine Suche (sofort fertig, Tiefe/Quelle „Buch 2d“, Knoten 0); in der Hilfe (Abschnitt Android) erklärt (T)
+- [~] Info „Quelle“: „Buch 12d“ bis 12 Steine, danach „berechnet“; „Tiefe“: letzte Iterationstiefe – unter 12 Steinen endet die Iteration, sobald alle Varianten das Buch erreichen (Tiefe „Buch 12d“, gleiche Werte, 4–10× schneller; seit 10/2026 auch in Qt/Tk) (T)
+- [~] Neu: Mini-Buch „Buch 2d“ – exakte Bewertungen der 57 Stellungen mit 0–2 Steinen eingebaut, dort keine Suche (sofort fertig, Tiefe/Quelle „Buch 2d“, Knoten 0); auch in Qt/Tk, in der Hilfe (Absatz „Tiefe“) erklärt (T)
 - [~] Transpositionstabelle 2^22 Einträge wie C++, auf Geräten mit wenig Heap 2^21/2^20 (exakte Ergebnisse unverändert, nur andere Knotenzahlen) (M11)
 
 ## 11. Dauer-Analyse
