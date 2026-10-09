@@ -720,19 +720,6 @@ class Controller(private val app: CfsApp) {
     }
 
     // ------------------------------------------------------------ evaluation / analysis
-    /** F6: first call evaluates, second call goes back to 1-7. */
-    fun toggleScores() {
-        if (scoresVisible) {
-            scoresVisible = false
-            anaSeq++
-            anaPending = null
-            clearScores()
-            setStatus(tx.t("status_scores_off"))
-        } else {
-            refresh(allScores = true)
-        }
-    }
-
     fun refresh(allScores: Boolean = false) {
         draw()
         updateTurn()

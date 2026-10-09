@@ -36,38 +36,44 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
 - [x] Gewinnreihe(n): grüner Außen- + weißer Innenring (E)
 - [x] Stein-Radien je Set vermessen – Werte werden zur Bauzeit mit dem Original-Algorithmus aus `cfs_core.sets` berechnet (`assets/sets/sets.json`)
 
-## 3. Menü „Datei“ (Drei-Punkte-Menü → Datei)
+**Menü auf Android (M12):** Die Desktop-Menüleiste ist für das Telefon neu geordnet.
+Erste Ebene im Drei-Punkte-Menü (⋮): Computer-Stufe …, Spielmodus ▸ (Mensch-Computer /
+2 Spieler / Computer-Computer ausspielen / Computer-Computer Match …), Stein-Set …, Neu
+mit Zufallsstellung …, Datei ▸, Ansicht ▸, Hilfe, Sprache …, Info. Die Abschnitte 3–7
+folgen weiter der Desktop-Gliederung und nennen, wo die Funktion auf Android liegt.
 
-- [x] Neues Spiel
-- [x] Neu mit Zufallsstellung… (Dialog) (E)
+## 3. Menü „Datei“ (⋮ → Datei ▸)
+
+- [~] Neues Spiel – nur als Button „Neu“ unter dem Brett (doppelt im Menü überflüssig)
+- [x] Neu mit Zufallsstellung… (Dialog, erste Menüebene) (E)
 - [~] Stellung laden… / speichern… (.4gp) – über das Storage Access Framework, byte-kompatibel zur Desktop-Version (M4) (T)
 - [x] Schnell speichern (F3) / Schnell laden (F4) – Datei `quicksave.4gp` im internen App-Speicher; Meldung, wenn nichts gespeichert (E)
-- [~] Ende – beendet die Activity und stoppt Engine/Match; der Prozess bleibt Android überlassen
+- [-] Ende – Android-Apps verlässt man mit Zurück bzw. der App-Übersicht; ein Beenden-Eintrag ist unüblich
 
-## 4. Menü „Ansicht“
+## 4. Menü „Ansicht“ (⋮ → Ansicht ▸)
 
 - [x] Ghost-Stein, Drop-Animation, letzten Zug zeigen (Haken, Standard an, gemerkt – A5)
 - [x] Spielstand ein/aus (Haken, synchron mit Button An/Aus), Spielstand reset
 - [~] Neu: „Großes Brett“ (Haken, **Standard an**, gemerkt) – Brett, Wertungszeile und Buttons ohne Seitenrand über die volle Breite (oben bleibt der Rand) (minimal skaliert, damit 7 gleich breite Spalten die Breite exakt füllen), im Hochformat bis 82 % statt 70 % der Höhe; aus = Rand wie am Desktop (M1)
 
-## 5. Menü „Einstellungen“
+## 5. Menü „Einstellungen“ (auf Android aufgelöst, Einträge in der ersten Menüebene)
 
-- [~] Computer-Stufe – Auswahlliste im Dialog statt Untermenü (Android erlaubt keine Untermenüs im Untermenü) (M5) (E)
-- [x] Mensch-Computer / 2-Spieler / Computer-Computer (ausspielen) als Radio-Gruppe
-- [~] Computer-Computer Match… – eigener Bildschirm statt nicht-modalem Fenster (M8) (E)
-- [x] Stop Auto Play
-- [x] vorheriges Set / nächstes Set
-- [~] 20 Stein-Sets – Auswahlliste „Stein-Set N – Name“ im Dialog, je Eintrag Vorschau (leeres Feld, gelber und roter Stein) in Originalgröße der Brettfelder (M5)
+- [~] Computer-Stufe – Auswahlliste im Dialog, erste Menüebene (M5, M12) (E)
+- [x] Mensch-Computer / 2-Spieler / Computer-Computer (ausspielen) als Radio-Gruppe unter ⋮ → Spielmodus ▸
+- [~] Computer-Computer Match… – unter ⋮ → Spielmodus ▸, eigener Bildschirm statt nicht-modalem Fenster (M8) (E)
+- [~] Stop Auto Play – als „Stop“ in der Titelleiste, nur sichtbar während Selbstspiel oder Match (im Querformat auf Telefonen als Button neben ⋮) (M12)
+- [-] vorheriges Set / nächstes Set – ersetzt durch Set-Dialog mit Vorschau und Zwei-Finger-Wisch; mit Tastatur weiter Bild hoch/runter
+- [~] 20 Stein-Sets – ⋮ → Stein-Set …: Auswahlliste „Stein-Set N – Name“, je Eintrag Vorschau (leeres Feld, gelber und roter Stein) in Originalgröße der Brettfelder, darüber der Tipp zur Zwei-Finger-Geste (M5)
 - [~] Neu: Zwei-Finger-Wisch über das Brett wechselt das Set (links = nächstes, rechts = vorheriges; Gegenstück zum Mausrad, ein Finger bleibt fürs Ziehen) (M2)
 
-## 6. Menü „Kommandos“
+## 6. Menü „Kommandos“ (auf Android entfallen – die Buttons unter dem Brett)
 
-- [x] erster Zug, Zug zurück, Zug vor, letzter Zug
-- [x] ziehen (Computer) – auch bei leerem Brett (Computer eröffnet, Mensch wird Rot)
-- [~] alle Züge bewerten (1x) (F6) – Umschalter wie A2, rechnet aber im Hintergrund mit Live-Anzeige statt synchron im GUI-Thread (M6) (E)
-- [x] Dauer-Analyse (F7) – Umschalter, synchron mit Button „Analyse“ (E)
+- [~] erster Zug, Zug zurück, Zug vor, letzter Zug – Buttons <<, <, >, >> (M12)
+- [~] ziehen (Computer) – Button „Ziehen“; auch bei leerem Brett (Computer eröffnet, Mensch wird Rot)
+- [-] alle Züge bewerten (1x) (F6) – entfällt auf Android (auch F6); die Dauer-Analyse zeigt dieselben Werte (M12)
+- [~] Dauer-Analyse (F7) – Button „Analyse“, erscheint blau, solange die Analyse läuft (E)
 
-## 7. Menü „Hilfe“
+## 7. Menü „Hilfe“ (auf Android: Hilfe, Sprache …, Info direkt in der ersten Menüebene)
 
 - [~] Inhalt (F1) – eigene Hilfe-Activity (M9) (E)
 - [x] Info – Dialog mit kopierbarem Text (Kopieren/Schließen)
@@ -77,7 +83,7 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
 
 - [x] 1–7 Spaltenzug, Pfeil links/rechts, Pfeil hoch/runter, Bild hoch/runter (Wrap-around)
 - [x] Mausrad über dem Brett wechselt das Set
-- [x] F1, F3/F4, F5, F6, F7; F10 neutralisiert
+- [~] F1, F3/F4, F5, F7; F10 neutralisiert – F6 entfällt (M12)
 - [~] Escape – schließt Menüs/Dialoge (Android-Standard: Zurück-Taste) – A8 sinngemäß
 - [-] Anzeige der Kürzel im Menü („Text\tKürzel“) – das Android-Optionsmenü kann auf API 21 keine Tastenbeschriftungen anzeigen; die Kürzel stehen in der Hilfe (Abschnitt „Tastenkürzel“)
 
@@ -129,6 +135,7 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
 
 ## 14. Spielstand (Mensch vs. Computer)
 
+- [~] Antippen des Felds „Spielstand“ schaltet ihn an oder aus; An/Aus und Reset als Buttons (Android)
 - [x] Standard aus; An/Aus aktiviert 0-0 gegen aktuelle Stufe (T)
 - [x] Zählt normale Partien und Match-Partien mit Mensch-Seite (Zuletzt-Zieher-Regel) (T)
 - [x] Stufenwechsel setzt den Stand der neuen Stufe auf 0-0 (T)
@@ -204,6 +211,12 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
   Abschnitt zur Touch-Bedienung (Desktop-Begriffe wie „Klick“ gelten sinngemäß).
 - **M10 Sprache:** Android-Ressourcen brauchen eine Standardsprache; das ist
   Englisch (international verständlicher Fallback statt Deutsch).
+- **M12 Menü:** Die Desktop-Menüleiste (Datei, Ansicht, Einstellungen, Kommandos,
+  Hilfe) ist auf dem Telefon umständlich: Stufe und Stein-Set lagen zwei Ebenen tief, die
+  Kommandos doppeln die Buttons unter dem Brett. Häufiges steht deshalb in der ersten
+  Menüebene, Seltenes in Datei ▸/Ansicht ▸; „Stop“ erscheint nur, wenn Selbstspiel oder
+  Match laufen (ein einzelner Computerzug ist schnell). „Alle Züge bewerten (1x)“ entfällt,
+  weil die Dauer-Analyse dieselben Werte zeigt.
 - **M11 Engine:** Python/C++ sind auf Android nicht ohne native Bibliotheken
   nutzbar; der Kotlin-Port vermeidet NDK-Code (F-Droid-freundlich, eine APK für
   alle CPU-Architekturen).

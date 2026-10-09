@@ -232,5 +232,7 @@
     <string name="a_copied">Copié dans le presse-papiers.</string>
     <string name="a_lang_system">Langue du système</string>
     <string name="a_big_board">Grand plateau</string>
+    <string name="a_game_mode">Mode de jeu</string>
+    <string name="a_set_tip">Astuce : glissez deux doigts sur le plateau pour changer de jeu.</string>
     <string name="a_menu">Menu</string>
 </resources>

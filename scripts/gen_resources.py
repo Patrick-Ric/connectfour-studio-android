@@ -64,6 +64,16 @@ ANDROID_STRINGS = {
     "a_big_board": {
         "de": "Großes Brett", "en": "Large board", "fr": "Grand plateau",
         "es": "Tablero grande", "nl": "Groot bord", "it": "Scacchiera grande"},
+    "a_game_mode": {
+        "de": "Spielmodus", "en": "Game mode", "fr": "Mode de jeu", "es": "Modo de juego",
+        "nl": "Spelmodus", "it": "Modalità di gioco"},
+    "a_set_tip": {
+        "de": "Tipp: Mit zwei Fingern über das Brett wischen wechselt das Set.",
+        "en": "Tip: swipe across the board with two fingers to change the set.",
+        "fr": "Astuce : glissez deux doigts sur le plateau pour changer de jeu.",
+        "es": "Consejo: desliza dos dedos sobre el tablero para cambiar el juego.",
+        "nl": "Tip: veeg met twee vingers over het bord om de set te wisselen.",
+        "it": "Suggerimento: scorri con due dita sulla scacchiera per cambiare set."},
     "a_menu": {
         "de": "Menü", "en": "Menu", "fr": "Menu", "es": "Menú", "nl": "Menu", "it": "Menu"},
 }
@@ -207,11 +217,16 @@ HELP_ANDROID = {
         "Finger auf dem Brett liegt, zeigt der Ghost-Stein die Landeposition; gezogen wird beim "
         "Loslassen. Wer den Finger aus dem Brett hinausschiebt, bricht den Zug ab. Ein Wisch "
         "mit zwei Fingern über das Brett wechselt das Stein-Set (nach links: nächstes, nach "
-        "rechts: vorheriges); Einstellungen > Stein-Set … zeigt eine Vorschau aller Bretter.",
-        "Die Menüs Datei, Ansicht, Einstellungen, Kommandos und Hilfe öffnen sich über das "
-        "Drei-Punkte-Menü (⋮) oben rechts. Computer-Stufe, Stein-Set und Sprache werden dort "
-        "in einer Auswahlliste gewählt. Das Computer-Computer Match hat einen eigenen "
-        "Bildschirm; mit „Zurück“ geht es zum Brett, das Match läuft weiter.",
+        "rechts: vorheriges); ⋮ > Stein-Set … zeigt eine Vorschau aller Bretter.",
+        "Das Drei-Punkte-Menü (⋮) oben rechts enthält Computer-Stufe, Spielmodus (mit dem "
+        "Computer-Computer Match), Stein-Set, Neu mit Zufallsstellung, Datei, Ansicht, Hilfe, "
+        "Sprache und Info. Die Kommandos der Desktop-Version (Zug zurück/vor, Ziehen, "
+        "Dauer-Analyse) sind die Buttons unter dem Brett; „Analyse“ erscheint blau, solange "
+        "die Dauer-Analyse läuft. Die einmalige Bewertung aller Züge (F6) gibt es auf Android "
+        "nicht – die Dauer-Analyse zeigt dieselben Werte. Während Selbstspiel oder Match "
+        "steht oben „Stop“. Ein Tipp auf das Feld „Spielstand“ schaltet ihn an oder aus. Das "
+        "Computer-Computer Match hat einen eigenen Bildschirm; mit „Zurück“ geht es zum "
+        "Brett, das Match läuft weiter.",
         "Laden und Speichern von Stellungen nutzt die Dateiauswahl des Systems (Gerätespeicher, "
         "SD-Karte, Cloud-Anbieter); die .4gp-Dateien sind mit der Desktop-Version austauschbar. "
         "Schnellspeicher, Einstellungen und Sprache liegen im internen Speicher der App.",
@@ -226,11 +241,16 @@ HELP_ANDROID = {
         "a stone there. While your finger rests on the board, the ghost stone shows where the "
         "stone will land; the move is made when you lift the finger. Sliding the finger off the "
         "board cancels the move. A two-finger swipe across the board changes the stone set "
-        "(left: next, right: previous); Settings > Stone set … shows a preview of every board.",
-        "The File, View, Settings, Commands and Help menus open from the three-dot menu (⋮) at "
-        "the top right. Computer level, stone set and language are chosen there from a list. The "
-        "computer-computer match has its own screen; “Back” returns to the board while the match "
-        "keeps running.",
+        "(left: next, right: previous); ⋮ > Stone set … shows a preview of every board.",
+        "The three-dot menu (⋮) at the top right contains Computer level, Game mode (with the "
+        "computer-computer match), Stone set, New with random position, File, View, Help, "
+        "Language and Info. The commands of the desktop version (move back/forward, Move, "
+        "permanent analysis) are the buttons below the board; “Analyze” turns blue while the "
+        "permanent analysis runs. The one-off evaluation of all moves (F6) does not exist on "
+        "Android – the permanent analysis shows the same values. During self-play or a match "
+        "“Stop” appears at the top. Tapping the Score box switches it on or off. The "
+        "computer-computer match has its own screen; “Back” returns to the board while the "
+        "match keeps running.",
         "Loading and saving positions uses the system file picker (device storage, SD card, "
         "cloud providers); .4gp files are interchangeable with the desktop version. Quick save, "
         "settings and language are kept in the app's internal storage.",
@@ -246,11 +266,17 @@ HELP_ANDROID = {
         "plateau, le pion fantôme indique où le pion atterrira ; le coup est joué quand le doigt "
         "se lève. Faire glisser le doigt hors du plateau annule le coup. Un glissement à deux "
         "doigts sur le plateau change de jeu de pions (vers la gauche : suivant, vers la droite : "
-        "précédent) ; Paramètres > Jeu de pions … montre un aperçu de chaque plateau.",
-        "Les menus Fichier, Affichage, Paramètres, Commandes et Aide s'ouvrent depuis le menu à "
-        "trois points (⋮) en haut à droite. Le niveau de l'ordinateur, le jeu de pions et la "
-        "langue y sont choisis dans une liste. Le match Ordinateur-Ordinateur a son propre "
-        "écran ; « Retour » revient au plateau pendant que le match continue.",
+        "précédent) ; ⋮ > Jeu de pions … montre un aperçu de chaque plateau.",
+        "Le menu à trois points (⋮) en haut à droite contient Niveau de l'ordinateur, Mode de "
+        "jeu (avec le match Ordinateur-Ordinateur), Jeu de pions, Nouvelle avec position "
+        "aléatoire, Fichier, Affichage, Aide, Langue et Info. Les commandes de la version de "
+        "bureau (coup arrière/avant, Jouer, analyse permanente) sont les boutons sous le "
+        "plateau ; « Analyser » devient bleu tant que l'analyse permanente tourne. "
+        "L'évaluation unique de tous les coups (F6) n'existe pas sur Android – l'analyse "
+        "permanente affiche les mêmes valeurs. Pendant l'autojeu ou un match, « Arrêter » "
+        "apparaît en haut. Toucher le cadre Score l'active ou le désactive. Le match "
+        "Ordinateur-Ordinateur a son propre écran ; « Retour » revient au plateau pendant que "
+        "le match continue.",
         "Le chargement et l'enregistrement des positions utilisent le sélecteur de fichiers du "
         "système (mémoire de l'appareil, carte SD, services cloud) ; les fichiers .4gp sont "
         "compatibles avec la version de bureau. Sauvegarde rapide, paramètres et langue sont "
@@ -268,11 +294,17 @@ HELP_ANDROID = {
         "tablero, la ficha fantasma muestra dónde caerá; la jugada se realiza al levantar el "
         "dedo. Deslizar el dedo fuera del tablero cancela la jugada. Deslizar dos dedos sobre el "
         "tablero cambia el juego de fichas (a la izquierda: siguiente, a la derecha: anterior); "
-        "Configuración > Juego de fichas … muestra una vista previa de cada tablero.",
-        "Los menús Archivo, Ver, Ajustes, Comandos y Ayuda se abren desde el menú de tres "
-        "puntos (⋮) arriba a la derecha. El nivel del ordenador, el juego de fichas y el idioma "
-        "se eligen allí de una lista. El partido Ordenador-Ordenador tiene su propia pantalla; "
-        "«Atrás» vuelve al tablero mientras el partido continúa.",
+        "⋮ > Juego de fichas … muestra una vista previa de cada tablero.",
+        "El menú de tres puntos (⋮) arriba a la derecha contiene Nivel del ordenador, Modo de "
+        "juego (con el partido Ordenador-Ordenador), Juego de fichas, Nueva con posición "
+        "aleatoria, Archivo, Ver, Ayuda, Idioma e Info. Los comandos de la versión de "
+        "escritorio (jugada atrás/adelante, Mover, análisis permanente) son los botones bajo "
+        "el tablero; «Analizar» se vuelve azul mientras el análisis permanente está activo. "
+        "La evaluación única de todas las jugadas (F6) no existe en Android: el análisis "
+        "permanente muestra los mismos valores. Durante el autojuego o un partido aparece "
+        "«Detener» arriba. Tocar el recuadro Marcador lo activa o desactiva. El partido "
+        "Ordenador-Ordenador tiene su propia pantalla; «Atrás» vuelve al tablero mientras el "
+        "partido continúa.",
         "Cargar y guardar posiciones usa el selector de archivos del sistema (almacenamiento "
         "del dispositivo, tarjeta SD, servicios en la nube); los archivos .4gp son compatibles "
         "con la versión de escritorio. El guardado rápido, los ajustes y el idioma se guardan "
@@ -288,12 +320,17 @@ HELP_ANDROID = {
         "beoordelingsrij laat daar een steen vallen. Zolang de vinger op het bord ligt, toont de "
         "ghost-steen waar de steen landt; de zet wordt gedaan bij het loslaten. Wie de vinger "
         "van het bord schuift, breekt de zet af. Met twee vingers over het bord vegen wisselt de "
-        "steenset (naar links: volgende, naar rechts: vorige); Instellingen > Steenset … toont "
+        "steenset (naar links: volgende, naar rechts: vorige); ⋮ > Steenset … toont "
         "een voorbeeld van elk bord.",
-        "De menu's Bestand, Weergave, Instellingen, Commando's en Help openen via het "
-        "driepuntsmenu (⋮) rechtsboven. Computerniveau, stenenset en taal worden daar uit een "
-        "lijst gekozen. De computer-computerwedstrijd heeft een eigen scherm; „Terug” gaat naar "
-        "het bord terwijl de wedstrijd doorloopt.",
+        "Het driepuntsmenu (⋮) rechtsboven bevat Computerniveau, Spelmodus (met de "
+        "computer-computerwedstrijd), Steenset, Nieuw met willekeurige stelling, Bestand, "
+        "Weergave, Help, Taal en Info. De commando's van de desktopversie (zet terug/vooruit, "
+        "Zet, doorlopende analyse) zijn de knoppen onder het bord; „Analyseren” wordt blauw "
+        "zolang de doorlopende analyse loopt. De eenmalige beoordeling van alle zetten (F6) "
+        "bestaat op Android niet – de doorlopende analyse toont dezelfde waarden. Tijdens "
+        "zelfspel of een wedstrijd verschijnt bovenaan „Stop”. Tikken op het vak Stand zet "
+        "het aan of uit. De computer-computerwedstrijd heeft een eigen scherm; „Terug” gaat "
+        "naar het bord terwijl de wedstrijd doorloopt.",
         "Stellingen laden en opslaan gebruikt de bestandskiezer van het systeem (apparaatopslag, "
         "SD-kaart, cloudaanbieders); .4gp-bestanden zijn uitwisselbaar met de desktopversie. "
         "Snel opslaan, instellingen en taal staan in de interne opslag van de app.",
@@ -309,12 +346,17 @@ HELP_ANDROID = {
         "sulla scacchiera, la pedina fantasma mostra dove atterrerà; la mossa avviene quando si "
         "solleva il dito. Trascinando il dito fuori dalla scacchiera la mossa viene annullata. "
         "Scorrendo con due dita sulla scacchiera si cambia set di pietre (a sinistra: successivo, "
-        "a destra: precedente); Impostazioni > Set di pietre … mostra un'anteprima di ogni "
+        "a destra: precedente); ⋮ > Set di pietre … mostra un'anteprima di ogni "
         "scacchiera.",
-        "I menu File, Visualizza, Impostazioni, Comandi e Aiuto si aprono dal menu a tre punti "
-        "(⋮) in alto a destra. Livello del computer, set di pedine e lingua si scelgono lì da un "
-        "elenco. La partita Computer-Computer ha una schermata propria; «Indietro» torna alla "
-        "scacchiera mentre la partita continua.",
+        "Il menu a tre punti (⋮) in alto a destra contiene Livello computer, Modalità di gioco "
+        "(con l'incontro Computer-Computer), Set di pietre, Nuova con posizione casuale, File, "
+        "Vista, Aiuto, Lingua e Info. I comandi della versione desktop (mossa indietro/avanti, "
+        "Muovi, analisi continua) sono i pulsanti sotto la scacchiera; «Analizza» diventa blu "
+        "finché l'analisi continua è attiva. La valutazione singola di tutte le mosse (F6) non "
+        "esiste su Android: l'analisi continua mostra gli stessi valori. Durante "
+        "l'autogioco o un incontro compare in alto «Ferma». Toccando il riquadro Punteggio lo "
+        "si attiva o disattiva. L'incontro Computer-Computer ha una schermata propria; "
+        "«Indietro» torna alla scacchiera mentre l'incontro continua.",
         "Il caricamento e il salvataggio delle posizioni usano il selettore di file del sistema "
         "(memoria del dispositivo, scheda SD, servizi cloud); i file .4gp sono compatibili con "
         "la versione desktop. Salvataggio rapido, impostazioni e lingua sono conservati nella "

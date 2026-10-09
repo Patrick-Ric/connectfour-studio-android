@@ -232,5 +232,7 @@
     <string name="a_copied">Copiato negli appunti.</string>
     <string name="a_lang_system">Lingua di sistema</string>
     <string name="a_big_board">Scacchiera grande</string>
+    <string name="a_game_mode">Modalità di gioco</string>
+    <string name="a_set_tip">Suggerimento: scorri con due dita sulla scacchiera per cambiare set.</string>
     <string name="a_menu">Menu</string>
 </resources>

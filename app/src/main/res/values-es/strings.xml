@@ -232,5 +232,7 @@
     <string name="a_copied">Copiado al portapapeles.</string>
     <string name="a_lang_system">Idioma del sistema</string>
     <string name="a_big_board">Tablero grande</string>
+    <string name="a_game_mode">Modo de juego</string>
+    <string name="a_set_tip">Consejo: desliza dos dedos sobre el tablero para cambiar el juego.</string>
     <string name="a_menu">Menú</string>
 </resources>

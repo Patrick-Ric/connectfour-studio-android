@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/score_box"
-    style="@style/Box">
+    style="@style/Box"
+    android:background="@drawable/box_bg_clickable">
 
     <TextView
         android:id="@+id/score_title"
@@ -38,15 +40,15 @@
         android:textColor="@color/text_main"
         android:textSize="14sp" />
 
+    <!-- Real buttons (not borderless): they must look like buttons. -->
     <LinearLayout
-        style="?android:attr/buttonBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="ButtonStyle">
 
         <Button
             android:id="@+id/stand_toggle"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusable="false"
@@ -54,7 +56,6 @@
 
         <Button
             android:id="@+id/stand_reset"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusable="false"

@@ -119,6 +119,31 @@ class MainActivity : Activity(), Controller.Listener {
         }
     }
 
+    /** Analyse button looks pressed while the permanent analysis runs; Stop in landscape. */
+    private fun updateToggles() {
+        val b = area.buttons[6]
+        if (c.autoAnalyze) {
+            b.backgroundTintList = android.content.res.ColorStateList.valueOf(ACTIVE_BLUE)
+            b.setTextColor(android.graphics.Color.WHITE)
+        } else {
+            b.backgroundTintList = defaultButtonTint
+            b.setTextColor(defaultButtonText)
+        }
+        findViewById<Button>(R.id.stop_button)?.let {
+            it.visibility = if (autoPlayRunning() && actionBar?.isShowing == false) View.VISIBLE else View.GONE
+        }
+    }
+
+    // Theme defaults of the column buttons (button 0 is never re-tinted).
+    private val defaultButtonText by lazy { area.buttons[0].textColors }
+    private val defaultButtonTint by lazy {
+        // Theme colour of normal buttons (a cleared tint would leave the button white).
+        val a = obtainStyledAttributes(intArrayOf(android.R.attr.colorButtonNormal))
+        val csl = a.getColorStateList(0)
+        a.recycle()
+        csl
+    }
+
     private fun bindViews() {
         area = findViewById(R.id.board_area)
         area.board.controller = c
@@ -131,6 +156,8 @@ class MainActivity : Activity(), Controller.Listener {
         )
         area.buttons.forEachIndexed { i, b -> b.setOnClickListener { cmds[i]() } }
         findViewById<Button>(R.id.stand_toggle).setOnClickListener { c.standToggle() }
+        findViewById<View>(R.id.score_box).setOnClickListener { c.standToggle() }
+        findViewById<Button>(R.id.stop_button)?.setOnClickListener { c.stop() }
         findViewById<Button>(R.id.stand_reset).setOnClickListener { c.standReset() }
         val table = findViewById<TableLayout>(R.id.info_rows)
         table.removeAllViews()
@@ -153,7 +180,10 @@ class MainActivity : Activity(), Controller.Listener {
             area.board.invalidate()
         }
         if (flags and Controller.PANEL != 0) updatePanel()
-        if (flags and Controller.MENU != 0) invalidateOptionsMenu()
+        if (flags and Controller.MENU != 0) {
+            invalidateOptionsMenu()
+            updateToggles()
+        }
         if (flags and Controller.MATCH_FRONT != 0 && c.matchWinOpen) {
             startActivity(Intent(this, MatchActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
         }
@@ -207,88 +237,69 @@ class MainActivity : Activity(), Controller.Listener {
         return true
     }
 
+    /**
+     * Menu for the phone (not the desktop menu bar): frequent functions on the
+     * first level; the desktop "Commands" are the buttons below the board.
+     */
     private fun buildMenu(menu: Menu) {
-        var m = menu.addSubMenu(0, 0, 0, t.t("menu_file"))
-        m.add(0, ID_NEW, 0, t.t("new_game"))
-        m.add(0, ID_NEW_RANDOM, 0, t.t("new_random"))
-        m.add(0, ID_LOAD, 0, t.t("load_position"))
-        m.add(0, ID_SAVE, 0, t.t("save_position"))
-        m.add(0, ID_QUICK_SAVE, 0, t.t("quick_save"))
-        m.add(0, ID_QUICK_LOAD, 0, t.t("quick_load"))
-        m.add(0, ID_QUIT, 0, t.t("quit"))
+        if (autoPlayRunning()) {
+            // Stop only while self-play or a match runs (a single engine move is quick).
+            menu.add(0, ID_STOP, 0, t.t("btn_stop")).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+        }
+        menu.add(0, ID_LEVEL, 1, t.t("computer_level") + " …")
+        val mode = menu.addSubMenu(0, 0, 2, t.t("a_game_mode"))
+        mode.add(GROUP_MODE, ID_MODE_HC, 0, t.t("human_computer")).isChecked = c.mode == Controller.MODE_COMPUTER
+        mode.add(GROUP_MODE, ID_MODE_TWO, 1, t.t("two_player")).isChecked = c.mode == Controller.MODE_TWO
+        mode.add(GROUP_MODE, ID_MODE_SELF, 2, t.t("selfplay")).isChecked = c.mode == Controller.MODE_SELFPLAY
+        mode.setGroupCheckable(GROUP_MODE, true, true)
+        mode.add(0, ID_MATCH, 3, t.t("match"))
+        menu.add(0, ID_SET, 3, t.t("stone_set") + " …")
+        menu.add(0, ID_NEW_RANDOM, 4, t.t("new_random"))
 
-        m = menu.addSubMenu(0, 0, 1, t.t("menu_view"))
-        m.add(0, ID_GHOST, 0, t.t("ghost_stone")).setCheckable(true).isChecked = c.ghost
-        m.add(0, ID_ANIM, 0, t.t("drop_animation")).setCheckable(true).isChecked = c.anim
-        m.add(0, ID_SHOW_LAST, 0, t.t("show_last_move")).setCheckable(true).isChecked = c.showLast
-        m.add(0, ID_BIG_BOARD, 0, t.t("a_big_board")).setCheckable(true).isChecked = c.bigBoard
-        m.add(0, ID_STAND, 0, t.t("score_onoff")).setCheckable(true).isChecked = c.stand.enabled
-        m.add(0, ID_STAND_RESET, 0, t.t("score_reset"))
+        val file = menu.addSubMenu(0, 0, 5, t.t("menu_file"))
+        file.add(0, ID_LOAD, 0, t.t("load_position"))
+        file.add(0, ID_SAVE, 1, t.t("save_position"))
+        file.add(0, ID_QUICK_SAVE, 2, t.t("quick_save"))
+        file.add(0, ID_QUICK_LOAD, 3, t.t("quick_load"))
 
-        m = menu.addSubMenu(0, 0, 2, t.t("menu_settings"))
-        m.add(0, ID_LEVEL, 0, t.t("computer_level") + " …")
-        m.add(GROUP_MODE, ID_MODE_HC, 1, t.t("human_computer")).isChecked = c.mode == Controller.MODE_COMPUTER
-        m.add(GROUP_MODE, ID_MODE_TWO, 2, t.t("two_player")).isChecked = c.mode == Controller.MODE_TWO
-        m.add(GROUP_MODE, ID_MODE_SELF, 3, t.t("selfplay")).isChecked = c.mode == Controller.MODE_SELFPLAY
-        m.setGroupCheckable(GROUP_MODE, true, true)
-        m.add(0, ID_MATCH, 4, t.t("match"))
-        m.add(0, ID_STOP, 5, t.t("stop_autoplay"))
-        m.add(0, ID_PREV_SET, 6, t.t("prev_set"))
-        m.add(0, ID_NEXT_SET, 7, t.t("next_set"))
-        m.add(0, ID_SET, 8, t.t("stone_set") + " …")
+        val view = menu.addSubMenu(0, 0, 6, t.t("menu_view"))
+        view.add(0, ID_GHOST, 0, t.t("ghost_stone")).setCheckable(true).isChecked = c.ghost
+        view.add(0, ID_ANIM, 1, t.t("drop_animation")).setCheckable(true).isChecked = c.anim
+        view.add(0, ID_SHOW_LAST, 2, t.t("show_last_move")).setCheckable(true).isChecked = c.showLast
+        view.add(0, ID_BIG_BOARD, 3, t.t("a_big_board")).setCheckable(true).isChecked = c.bigBoard
+        view.add(0, ID_STAND, 4, t.t("score_onoff")).setCheckable(true).isChecked = c.stand.enabled
+        view.add(0, ID_STAND_RESET, 5, t.t("score_reset"))
 
-        m = menu.addSubMenu(0, 0, 3, t.t("menu_commands"))
-        m.add(0, ID_FIRST, 0, t.t("first_move"))
-        m.add(0, ID_BACK, 0, t.t("move_back"))
-        m.add(0, ID_FORWARD, 0, t.t("move_forward"))
-        m.add(0, ID_LAST, 0, t.t("last_move"))
-        m.add(0, ID_ENGINE, 0, t.t("engine_move"))
-        m.add(0, ID_SCORE_ALL, 0, t.t("score_all")).setCheckable(true).isChecked = c.scoresVisible && !c.autoAnalyze
-        m.add(0, ID_AUTO, 0, t.t("permanent_analysis")).setCheckable(true).isChecked = c.autoAnalyze
-
-        m = menu.addSubMenu(0, 0, 4, t.t("menu_help"))
-        m.add(0, ID_HELP, 0, t.t("help_contents"))
-        m.add(0, ID_INFO, 0, t.t("help_info"))
-        m.add(0, ID_LANG, 0, t.t("lang_menu") + " …")
+        menu.add(0, ID_HELP, 7, t.t("menu_help"))
+        menu.add(0, ID_LANG, 8, t.t("lang_menu") + " …")
+        menu.add(0, ID_INFO, 9, t.t("help_info"))
     }
+
+    private fun autoPlayRunning(): Boolean = c.selfplayMode() || c.matchMode()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            ID_NEW -> c.newGame()
+            ID_STOP -> c.stop()
+            ID_LEVEL -> showLevelDialog()
+            ID_MODE_HC -> c.selectEngine()
+            ID_MODE_TWO -> c.toggleTwoPlayer()
+            ID_MODE_SELF -> c.selectSelfplay()
+            ID_MATCH -> if (c.canOpenMatch()) startActivity(Intent(this, MatchActivity::class.java))
+            ID_SET -> showSetDialog()
             ID_NEW_RANDOM -> if (!c.thinking) showRandomDialog()
             ID_LOAD -> openFile()
             ID_SAVE -> saveFile()
             ID_QUICK_SAVE -> c.quickSave()
             ID_QUICK_LOAD -> c.quickLoad()
-            ID_QUIT -> {
-                c.quit()
-                finish()
-            }
             ID_GHOST -> c.setGhost(!c.ghost)
             ID_ANIM -> c.setAnim(!c.anim)
             ID_SHOW_LAST -> c.setShowLast(!c.showLast)
             ID_BIG_BOARD -> c.setBigBoard(!c.bigBoard)
             ID_STAND -> c.standToggle()
             ID_STAND_RESET -> c.standReset()
-            ID_LEVEL -> showLevelDialog()
-            ID_MODE_HC -> c.selectEngine()
-            ID_MODE_TWO -> c.toggleTwoPlayer()
-            ID_MODE_SELF -> c.selectSelfplay()
-            ID_MATCH -> if (c.canOpenMatch()) startActivity(Intent(this, MatchActivity::class.java))
-            ID_STOP -> c.stop()
-            ID_PREV_SET -> c.cycleSet(-1)
-            ID_NEXT_SET -> c.cycleSet(+1)
-            ID_SET -> showSetDialog()
-            ID_FIRST -> c.gotoFirst()
-            ID_BACK -> c.undo()
-            ID_FORWARD -> c.redo()
-            ID_LAST -> c.gotoLast()
-            ID_ENGINE -> c.engineMove()
-            ID_SCORE_ALL -> c.toggleScores()
-            ID_AUTO -> c.toggleAutoAnalyzeBtn()
             ID_HELP -> showHelp()
-            ID_INFO -> showInfo()
             ID_LANG -> showLanguageDialog()
+            ID_INFO -> showInfo()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -316,7 +327,6 @@ class MainActivity : Activity(), Controller.Listener {
             KeyEvent.KEYCODE_F3 -> c.quickSave()
             KeyEvent.KEYCODE_F4 -> c.quickLoad()
             KeyEvent.KEYCODE_F5 -> c.engineMove()
-            KeyEvent.KEYCODE_F6 -> c.toggleScores()
             KeyEvent.KEYCODE_F7 -> c.toggleAutoAnalyzeBtn()
             KeyEvent.KEYCODE_F10 -> Unit // neutralised like on the desktop
             else -> return super.onKeyDown(keyCode, event)
@@ -383,8 +393,23 @@ class MainActivity : Activity(), Controller.Listener {
                 return row
             }
         }
+        // Title with the gesture tip below it.
+        val head = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(Math.round(24 * dp), Math.round(20 * dp), Math.round(24 * dp), Math.round(8 * dp))
+            addView(TextView(this@MainActivity).apply {
+                text = t.t("stone_set")
+                textSize = 20f
+                setTextColor(android.graphics.Color.BLACK)
+            })
+            addView(TextView(this@MainActivity).apply {
+                text = t.t("a_set_tip")
+                setTextColor(android.graphics.Color.GRAY)
+                setPadding(0, Math.round(4 * dp), 0, 0)
+            })
+        }
         val d = AlertDialog.Builder(this)
-            .setTitle(t.t("stone_set"))
+            .setCustomTitle(head)
             .setAdapter(adapter) { _, which -> c.switchSet(ids[which]) }
             .setNegativeButton(t.t("btn_cancel"), null)
             .create()
@@ -599,19 +624,18 @@ class MainActivity : Activity(), Controller.Listener {
 
     companion object {
         private const val COMPACT_HEIGHT_DP = 480
+        private const val ACTIVE_BLUE = 0xff1e50be.toInt()
         private const val ALL = Controller.BOARD or Controller.PANEL or Controller.MENU
         private const val REQ_OPEN = 1
         private const val REQ_SAVE = 2
         private const val MAX_FILE = 1 shl 20
         private const val GROUP_MODE = 1
 
-        private const val ID_NEW = 101
         private const val ID_NEW_RANDOM = 102
         private const val ID_LOAD = 103
         private const val ID_SAVE = 104
         private const val ID_QUICK_SAVE = 105
         private const val ID_QUICK_LOAD = 106
-        private const val ID_QUIT = 107
         private const val ID_GHOST = 201
         private const val ID_ANIM = 202
         private const val ID_SHOW_LAST = 203
@@ -624,16 +648,7 @@ class MainActivity : Activity(), Controller.Listener {
         private const val ID_MODE_SELF = 304
         private const val ID_MATCH = 305
         private const val ID_STOP = 306
-        private const val ID_PREV_SET = 307
-        private const val ID_NEXT_SET = 308
         private const val ID_SET = 309
-        private const val ID_FIRST = 401
-        private const val ID_BACK = 402
-        private const val ID_FORWARD = 403
-        private const val ID_LAST = 404
-        private const val ID_ENGINE = 405
-        private const val ID_SCORE_ALL = 406
-        private const val ID_AUTO = 407
         private const val ID_HELP = 501
         private const val ID_INFO = 502
         private const val ID_LANG = 503

@@ -232,5 +232,7 @@
     <string name="a_copied">Naar het klembord gekopieerd.</string>
     <string name="a_lang_system">Systeemtaal</string>
     <string name="a_big_board">Groot bord</string>
+    <string name="a_game_mode">Spelmodus</string>
+    <string name="a_set_tip">Tip: veeg met twee vingers over het bord om de set te wisselen.</string>
     <string name="a_menu">Menu</string>
 </resources>
