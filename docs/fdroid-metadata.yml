@@ -1,8 +1,3 @@
-# Template for fdroiddata: metadata/io.github.patrickric.connectfourstudio.yml
-# (rename the file to the final application ID; adjust URLs, commit/tag).
-# Descriptions, icon, screenshots and changelogs come from fastlane/ in the
-# source repository, so they are not repeated here.
-
 Categories:
   - Games
 License: AGPL-3.0-only
@@ -15,6 +10,7 @@ AutoName: ConnectFour Studio
 
 RepoType: git
 Repo: https://github.com/Patrick-Ric/connectfour-studio-android.git
+Binaries: https://github.com/Patrick-Ric/connectfour-studio-android/releases/download/v%v/ConnectFourStudio-%v.apk
 
 Builds:
   - versionName: 1.0.0
@@ -22,18 +18,12 @@ Builds:
     commit: v1.0.0
     subdir: app
     sudo:
-      # Gradle runs on JDK 21 (gradle/gradle-daemon-jvm.properties); only
-      # needed if the build server image does not provide it already.
       - apt-get update
       - apt-get install -y openjdk-21-jdk-headless
       - update-alternatives --auto java
     gradle:
       - yes
 
-# Reproducible build: F-Droid builds the APK itself, compares it with the
-# developer-signed APK of the GitHub release and, if identical, publishes it
-# with the developer signature (same signature as the GitHub download).
-Binaries: https://github.com/Patrick-Ric/connectfour-studio-android/releases/download/v%v/ConnectFourStudio-%v.apk
 AllowedAPKSigningKeys: 0290aabc0607b5ba98d1fbf67e8f03b166d04f2d6545634f99030278c60546a1
 
 AutoUpdateMode: Version
