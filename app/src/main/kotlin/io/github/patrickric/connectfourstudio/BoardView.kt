@@ -66,6 +66,22 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     fun boardH(): Int = Game.ROWS * cell
     fun canvasH(): Int = boardH() + scoreH
 
+    /**
+     * Uniform zoom (>= 1) so that the integer-sized board fills the width
+     * exactly ("Large board"); everything is drawn in unscaled cell units.
+     */
+    var scale: Float = 1f
+        set(v) {
+            if (v != field) {
+                field = v
+                requestLayout()
+                invalidate()
+            }
+        }
+
+    fun scaledW(): Int = Math.round(boardW() * scale)
+    fun scaledH(): Int = Math.round(canvasH() * scale)
+
     fun setCell(c: Int) {
         val n = maxOf(8, c)
         if (n != cell) {
@@ -76,7 +92,7 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        setMeasuredDimension(boardW(), canvasH())
+        setMeasuredDimension(scaledW(), scaledH())
     }
 
     private fun colFromX(x: Float): Int? {
@@ -89,10 +105,12 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     override fun onTouchEvent(ev: MotionEvent): Boolean {
         val c = controller ?: return false
         val inside = ev.x >= 0 && ev.x < width && ev.y >= 0 && ev.y < height
+        val x = ev.x / scale
+        val y = ev.y / scale
         when (ev.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 touching = true
-                if (ev.y < boardH()) c.setHover(colFromX(ev.x)) else c.setHover(null)
+                if (y < boardH()) c.setHover(colFromX(x)) else c.setHover(null)
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
@@ -100,8 +118,8 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 if (!inside) {
                     touching = false // slid off the board: cancel
                     c.setHover(null)
-                } else if (ev.y < boardH()) {
-                    c.setHover(colFromX(ev.x))
+                } else if (y < boardH()) {
+                    c.setHover(colFromX(x))
                 }
                 return true
             }
@@ -111,8 +129,8 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 if (ev.getToolType(0) != MotionEvent.TOOL_TYPE_MOUSE) c.setHover(null)
                 if (!wasTouching || !inside) return true
                 val bh = boardH()
-                if (ev.y >= bh && ev.y < bh + scoreGap) return true // gap between board and row
-                val col = colFromX(ev.x) ?: return true
+                if (y >= bh && y < bh + scoreGap) return true // gap between board and row
+                val col = colFromX(x) ?: return true
                 performClick()
                 c.onCanvasClick(col)
                 return true
@@ -132,7 +150,7 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         val c = controller ?: return false
         when (ev.actionMasked) {
             MotionEvent.ACTION_HOVER_ENTER, MotionEvent.ACTION_HOVER_MOVE ->
-                c.setHover(if (ev.y < boardH()) colFromX(ev.x) else null)
+                c.setHover(if (ev.y / scale < boardH()) colFromX(ev.x / scale) else null)
             MotionEvent.ACTION_HOVER_EXIT -> c.setHover(null)
         }
         return true
@@ -163,6 +181,13 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     // ------------------------------------------------------------ drawing
     override fun onDraw(canvas: Canvas) {
         val c = controller ?: return
+        val save = canvas.save()
+        canvas.scale(scale, scale)
+        drawBoard(canvas, c)
+        canvas.restoreToCount(save)
+    }
+
+    private fun drawBoard(canvas: Canvas, c: Controller) {
         val sets = c.sets
         val si = sets.info(c.setNo)
         val game = c.game

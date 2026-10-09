@@ -48,7 +48,7 @@ Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
 
 - [x] Ghost-Stein, Drop-Animation, letzten Zug zeigen (Haken, Standard an, gemerkt – A5)
 - [x] Spielstand ein/aus (Haken, synchron mit Button An/Aus), Spielstand reset
-- [~] Neu: „Großes Brett“ (Haken, Standard aus, gemerkt) – Brett und Buttons ohne Seitenrand über die volle Breite, im Hochformat bis 82 % statt 70 % der Höhe (M1)
+- [~] Neu: „Großes Brett“ (Haken, **Standard an**, gemerkt) – Brett, Wertungszeile und Buttons komplett randlos über die volle Breite (minimal skaliert, damit 7 gleich breite Spalten die Breite exakt füllen), im Hochformat bis 82 % statt 70 % der Höhe; aus = Rand wie am Desktop (M1)
 
 ## 5. Menü „Einstellungen“
 

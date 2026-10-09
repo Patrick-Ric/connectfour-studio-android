@@ -35,6 +35,7 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
 
     private val sideMargin: Int get() = if (large) 0 else margin
+    private val vMargin: Int get() = if (large) 0 else margin
     private val effHeightFraction: Float get() = if (large) maxOf(heightFraction, LARGE_HEIGHT_FRACTION) else heightFraction
 
     init {
@@ -67,7 +68,8 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     /** Evaluation row and button heights for a cell size (full size unless space is tight). */
     private fun scoreFor(cell: Int): Int = Math.round((cell * 0.5f).coerceIn(scoreMin, scoreMax))
     private fun barFor(cell: Int): Int = Math.round((cell * 0.6f).coerceIn(barMin, barMax))
-    private fun needH(cell: Int): Int = Game.ROWS * cell + scoreFor(cell) + barFor(cell) + 2 * margin + barGap
+    private fun needH(cell: Int, scale: Float = 1f): Int =
+        Math.round((Game.ROWS * cell + scoreFor(cell)) * scale) + barFor(cell) + 2 * vMargin + barGap
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val wMode = MeasureSpec.getMode(widthMeasureSpec)
@@ -76,36 +78,47 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         val h = MeasureSpec.getSize(heightMeasureSpec)
         val availW = if (wMode == MeasureSpec.UNSPECIFIED) Int.MAX_VALUE / 4 else (w * widthFraction).toInt()
         val availH = if (hMode == MeasureSpec.UNSPECIFIED) Int.MAX_VALUE / 4 else (h * effHeightFraction).toInt()
-        var cell = maxOf(8, (availW - 2 * sideMargin) / Game.COLS)
+        val widthCell = maxOf(8, (availW - 2 * sideMargin) / Game.COLS)
+        var cell = widthCell
         while (cell > 8 && needH(cell) > availH) cell--
+        // Large board: zoom the integer cells a little so the board fills the
+        // width exactly (no rest of up to 6 px).
+        var scale = 1f
+        if (large && cell == widthCell && wMode == MeasureSpec.EXACTLY) {
+            val s = (availW - 2 * sideMargin).toFloat() / (Game.COLS * cell)
+            if (s > 1f && needH(cell, s) <= availH) scale = s
+        }
         barH = barFor(cell)
         board.setScoreHeight(scoreFor(cell))
         board.setCell(cell)
+        board.scale = scale
         board.measure(
-            MeasureSpec.makeMeasureSpec(board.boardW(), MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(board.canvasH(), MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(board.scaledW(), MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(board.scaledH(), MeasureSpec.EXACTLY),
         )
-        for (b in buttons) {
+        for ((c, b) in buttons.withIndex()) {
             b.measure(
-                MeasureSpec.makeMeasureSpec(cell, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(colEdge(c + 1) - colEdge(c), MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(barH, MeasureSpec.EXACTLY),
             )
         }
-        val needW = board.boardW() + 2 * sideMargin
-        val needH = needH(cell)
+        val needW = board.scaledW() + 2 * sideMargin
+        val needH = needH(cell, scale)
         val mw = if (wMode == MeasureSpec.EXACTLY) w else minOf(needW, if (wMode == MeasureSpec.AT_MOST) w else needW)
         val mh = if (hMode == MeasureSpec.EXACTLY) h else minOf(needH, if (hMode == MeasureSpec.AT_MOST) h else needH)
         setMeasuredDimension(mw, mh)
     }
 
+    /** Left edge of column [c] (0..7) in pixels relative to the board. */
+    private fun colEdge(c: Int): Int = Math.round(c * board.cell * board.scale)
+
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        val cell = board.cell
-        val left = maxOf(0, (r - l - board.boardW()) / 2)
-        val top = margin
-        board.layout(left, top, left + board.boardW(), top + board.canvasH())
-        val y = top + board.canvasH() + barGap
+        val left = maxOf(0, (r - l - board.scaledW()) / 2)
+        val top = vMargin
+        board.layout(left, top, left + board.scaledW(), top + board.scaledH())
+        val y = top + board.scaledH() + barGap
         for ((c, btn) in buttons.withIndex()) {
-            btn.layout(left + c * cell, y, left + (c + 1) * cell, y + barH)
+            btn.layout(left + colEdge(c), y, left + colEdge(c + 1), y + barH)
         }
     }
 
