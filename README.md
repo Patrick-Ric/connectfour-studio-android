@@ -63,15 +63,17 @@ Results:
 - Test report: `core/build/reports/tests/test/index.html`
 - Lint report: `app/build/reports/lint-results-debug.html`
 
-To sign a release yourself (e.g. for GitHub releases / reproducible builds):
+To sign a release yourself (GitHub releases / reproducible F-Droid builds),
+sign the unsigned APK **directly** with `--alignment-preserved` – no
+`zipalign` step. Otherwise apksigner re-aligns the uncompressed entries and
+F-Droid can no longer copy the signature onto its own (bit-identical) build:
 
 ```bash
-~/Android/Sdk/build-tools/36.0.0/zipalign -p -f 4 app/build/outputs/apk/release/app-release-unsigned.apk ConnectFourStudio-aligned.apk
+PATH=/usr/lib/jvm/java-21-openjdk/bin:$PATH ~/Android/Sdk/build-tools/36.0.0/apksigner sign --alignment-preserved --ks ~/connectfour-release.jks --ks-key-alias cfs --out ConnectFourStudio-1.0.0.apk app/build/outputs/apk/release/app-release-unsigned.apk
 ```
 
-```bash
-~/Android/Sdk/build-tools/36.0.0/apksigner sign --ks my-release.jks --out ConnectFourStudio-1.0.0.apk ConnectFourStudio-aligned.apk
-```
+Signing certificate SHA-256 (also in `docs/fdroid-metadata.yml`):
+`0290aabc0607b5ba98d1fbf67e8f03b166d04f2d6545634f99030278c60546a1`
 
 ## Install
 
