@@ -1019,6 +1019,9 @@ class Controller(private val app: CfsApp) {
     // ------------------------------------------------------------ match
     /** Desktop `match_dialog`: false = refused (stop first). */
     fun canOpenMatch(): Boolean {
+        // A running match can always be watched (desktop: the window stays open;
+        // on Android the screen is left with "Back" and must be reachable again).
+        if (matchMode()) return true
         if (selfplayMode() || thinking) {
             setStatus(tx.t("status_stop_before_match"))
             return false
