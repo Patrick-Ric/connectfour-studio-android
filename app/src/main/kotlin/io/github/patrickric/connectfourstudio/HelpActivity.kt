@@ -40,14 +40,16 @@ class HelpActivity : Activity() {
     private lateinit var findEdit: EditText
     private lateinit var findInfo: TextView
     private lateinit var zoomInfo: TextView
+    private val items = ArrayList<Item>()
     private val blocks = ArrayList<Block>()
-    private val anchors = HashMap<String, View>()
+    private val anchorIndex = HashMap<String, Int>()
     private var factor = 1.0f
     private var hitBlock = -1
     private var hitEnd = 0
     private var hitSpan: BackgroundColorSpan? = null
     private val t get() = c.tx
 
+    private class Item(val kind: String, val text: Spanned, val hasLink: Boolean)
     private class Block(val view: TextView, val kind: String, val text: Spanned, val holder: View)
 
     override fun attachBaseContext(newBase: Context) {
@@ -144,20 +146,13 @@ class HelpActivity : Activity() {
         content.addView(icons)
 
         val json = resources.openRawResource(R.raw.help).bufferedReader(Charsets.UTF_8).use { it.readText() }
-        val items = JSONArray(json)
-        for (i in 0 until items.length()) {
-            val o = items.getJSONObject(i)
+        val arr = JSONArray(json)
+        for (i in 0 until arr.length()) {
+            val o = arr.getJSONObject(i)
             when (val kind = o.getString("t")) {
                 "head", "sub" -> {
-                    val tv = TextView(this)
-                    val sp = SpannableString(o.getString("text"))
-                    tv.setTypeface(null, Typeface.BOLD)
-                    tv.setTextColor(COLOR_HEAD)
-                    tv.setPadding(0, Math.round((if (kind == "head") 14 else 10) * dp), 0, Math.round(4 * dp))
-                    tv.setText(sp, TextView.BufferType.SPANNABLE)
-                    content.addView(tv)
-                    anchors[o.getString("id")] = tv
-                    blocks.add(Block(tv, kind, sp, tv))
+                    anchorIndex[o.getString("id")] = items.size
+                    items.add(Item(kind, SpannableString(o.getString("text")), false))
                 }
                 "para" -> {
                     val sb = SpannableStringBuilder()
@@ -174,36 +169,75 @@ class HelpActivity : Activity() {
                             }
                             p.has("l") -> {
                                 sb.append(p.getString("l"))
-                                val target = p.getString("to")
-                                sb.setSpan(LinkSpan(target), start, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                                sb.setSpan(LinkSpan(p.getString("to")), start, sb.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                                 hasLink = true
                             }
                         }
                     }
-                    val tv = TextView(this)
-                    tv.setTextColor(COLOR_TEXT)
+                    items.add(Item(kind, sb, hasLink))
+                }
+                "mono" -> items.add(Item(kind, SpannableString(o.getString("text")), false))
+            }
+        }
+        // The first screen at once, the rest in small batches per frame, so the
+        // UI thread never blocks for long (slow devices).
+        buildUpTo(INITIAL_BLOCKS - 1)
+        content.post(object : Runnable {
+            override fun run() {
+                if (isFinishing || blocks.size >= items.size) return
+                buildUpTo(blocks.size + BATCH_BLOCKS - 1)
+                content.post(this)
+            }
+        })
+    }
+
+    /** Creates the views of all items up to [last] (inclusive). */
+    private fun buildUpTo(last: Int) {
+        val dp = resources.displayMetrics.density
+        while (blocks.size <= minOf(last, items.size - 1)) {
+            val it = items[blocks.size]
+            val tv = TextView(this)
+            tv.setTextColor(if (it.kind == "head" || it.kind == "sub") COLOR_HEAD else COLOR_TEXT)
+            tv.setText(it.text, TextView.BufferType.SPANNABLE)
+            var holder: View = tv
+            when (it.kind) {
+                "head", "sub" -> {
+                    tv.setTypeface(null, Typeface.BOLD)
+                    tv.setPadding(0, Math.round((if (it.kind == "head") 14 else 10) * dp), 0, Math.round(4 * dp))
+                }
+                "para" -> {
                     tv.setPadding(0, Math.round(3 * dp), 0, Math.round(3 * dp))
-                    tv.setText(sb, TextView.BufferType.SPANNABLE)
                     tv.setTextIsSelectable(true)
-                    if (hasLink) tv.movementMethod = LinkMovementMethod.getInstance()
-                    content.addView(tv)
-                    blocks.add(Block(tv, kind, sb, tv))
+                    if (it.hasLink) tv.movementMethod = LinkMovementMethod.getInstance()
                 }
                 "mono" -> {
-                    val tv = TextView(this)
                     tv.typeface = Typeface.MONOSPACE
-                    tv.setTextColor(COLOR_TEXT)
-                    val sp = SpannableString(o.getString("text"))
-                    tv.setText(sp, TextView.BufferType.SPANNABLE)
                     tv.setTextIsSelectable(true)
                     val hs = HorizontalScrollView(this)
                     hs.addView(tv)
                     hs.setPadding(0, Math.round(4 * dp), 0, Math.round(4 * dp))
-                    content.addView(hs)
-                    blocks.add(Block(tv, kind, sp, hs))
+                    holder = hs
                 }
             }
+            content.addView(holder)
+            val b = Block(tv, it.kind, it.text, holder)
+            blocks.add(b)
+            sizeBlock(b)
         }
+    }
+
+    /** Runs [fn] once [v] has been laid out. */
+    private fun afterLayout(v: View, fn: () -> Unit) {
+        if (v.isLaidOut && !v.isLayoutRequested) {
+            fn()
+            return
+        }
+        v.viewTreeObserver.addOnGlobalLayoutListener(object : android.view.ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                v.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                fn()
+            }
+        })
     }
 
     private inner class LinkSpan(private val target: String) : ClickableSpan() {
@@ -218,21 +252,25 @@ class HelpActivity : Activity() {
 
     /** Jumps to an anchor (heading) of the help text. */
     fun goto(name: String) {
-        val v = anchors[name] ?: return
-        scroll.post { scroll.smoothScrollTo(0, v.top) }
+        val idx = anchorIndex[name] ?: return
+        buildUpTo(idx)
+        val v = blocks[idx].holder
+        afterLayout(v) { scroll.smoothScrollTo(0, v.top) }
+    }
+
+    private fun sizeBlock(b: Block) {
+        val base = 15f * factor
+        b.view.textSize = when (b.kind) {
+            "head" -> base * 1.3f
+            "sub" -> base * 1.1f
+            "mono" -> base * 0.85f
+            else -> base
+        }
     }
 
     @SuppressLint("SetTextI18n") // "110%" as on the desktop
     private fun applyZoom() {
-        val base = 15f * factor
-        for (b in blocks) {
-            b.view.textSize = when (b.kind) {
-                "head" -> base * 1.3f
-                "sub" -> base * 1.1f
-                "mono" -> base * 0.85f
-                else -> base
-            }
-        }
+        for (b in blocks) sizeBlock(b)
         zoomInfo.text = "${Math.round(factor * 100)}%"
     }
 
@@ -257,12 +295,12 @@ class HelpActivity : Activity() {
             return
         }
         val startBlock = if (hitBlock < 0) 0 else hitBlock
-        val n = blocks.size
+        val n = items.size
         for (step in 0..n) {
             val bi = (startBlock + step) % n
             val from = if (step == 0 && hitBlock >= 0) hitEnd else 0
             if (step == n && from == 0) break
-            val txt = blocks[bi].text.toString().lowercase()
+            val txt = items[bi].text.toString().lowercase()
             val idx = txt.indexOf(needle, from)
             if (idx >= 0) {
                 showHit(bi, idx, idx + needle.length)
@@ -282,14 +320,15 @@ class HelpActivity : Activity() {
     }
 
     private fun showHit(bi: Int, start: Int, end: Int) {
+        buildUpTo(bi)
         val b = blocks[bi]
         val span = BackgroundColorSpan(Color.YELLOW)
         (b.view.text as? android.text.Spannable)?.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         hitSpan = span
         hitBlock = bi
         hitEnd = end
-        b.view.post {
-            val layout = b.view.layout ?: return@post
+        afterLayout(b.view) {
+            val layout = b.view.layout ?: return@afterLayout
             val line = layout.getLineForOffset(start)
             val inner = if (b.holder !== b.view) b.view.top else 0 // TextView inside a HorizontalScrollView
             val y = b.holder.top + inner + layout.getLineTop(line) - Math.round(24 * resources.displayMetrics.density)
@@ -326,6 +365,8 @@ class HelpActivity : Activity() {
     }
 
     companion object {
+        private const val INITIAL_BLOCKS = 12
+        private const val BATCH_BLOCKS = 6
         private const val COLOR_HEAD = 0xff1e3a8a.toInt()
         private const val COLOR_TEXT = 0xff202020.toInt()
     }

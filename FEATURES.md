@@ -9,7 +9,7 @@ Status:
 `[~]` angepasst (Begründung dahinter, Kennung **M1 …** → Abschnitt „Mobile Anpassungen“) ·
 `[-]` weggelassen (mit Begründung).
 Kürzel: (T) = JUnit-Test im Modul `core`, (E) = auf dem Emulator geprüft
-(API 21 und API 25, siehe README „Testen auf Gerät“).
+(API 21 und API 24, siehe README „Testing on a device“).
 
 ## 1. Hauptfenster / Layout
 

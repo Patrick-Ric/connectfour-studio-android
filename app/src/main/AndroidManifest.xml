@@ -29,7 +29,8 @@
         <activity
             android:name=".MatchActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".HelpActivity"

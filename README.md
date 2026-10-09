@@ -138,10 +138,11 @@ analysis. Rotation: `adb shell settings put system accelerometer_rotation 0`
 and `adb shell settings put system user_rotation 1` (landscape) / `0`.
 
 Without KVM (no VT-x/AMD-V, as on the development machine of this port) x86
-images do not run. ARM images (armeabi-v7a, API 21 and 25) still work in pure
-software emulation with the older emulator 28.0.23 (`-engine classic` for
-API 21); they are very slow (engine moves take seconds to minutes instead of
-milliseconds) but fine for functional tests. See `DECISIONS.md` (Tests).
+images do not run. ARM images (armeabi-v7a, API 21 and API 24 "default") still
+work in pure software emulation with the older emulator 28.0.23
+(`-engine classic` for API 21); they are very slow (engine moves take seconds
+to minutes instead of milliseconds) but fine for functional tests. See
+`DECISIONS.md` (Tests) for the test protocol.
 
 ## F-Droid
 

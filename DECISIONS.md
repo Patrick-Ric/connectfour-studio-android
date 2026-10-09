@@ -140,8 +140,26 @@ Feature-Abgleich und mobile Abweichungen stehen in `FEATURES.md`.
   scoreToMovesLeft), 300 Buchstellungen, 80 Partien (Gewinnreihen) und 80
   `.4gp`-Präfixfällen.
 - Emulator: Auf diesem Rechner gibt es kein KVM (keine VT-x/AMD-V-Flags), daher
-  laufen x86_64-Images nicht. Getestet wurde mit ARM-Images (API 21 und API
-  25, armeabi-v7a) in reiner Software-Emulation mit Emulator 28.0.23 (die
-  aktuelle Version unterstützt ARM-Gäste auf x86 nicht mehr). Diese Emulation
-  ist etwa 100× langsamer als ein echtes Gerät; Rechenzeiten in den
-  Screenshots sind entsprechend hoch.
+  laufen x86_64-Images (z. B. API 35) nicht. Getestet wurde mit ARM-Images
+  (armeabi-v7a) in reiner Software-Emulation mit Emulator 28.0.23 (die aktuelle
+  Version 37 unterstützt ARM-Gäste auf x86 nicht mehr): **API 21** (Android 5.0,
+  `-engine classic`) und **API 24** (Android 7.0, AOSP-Image). Das Google-APIs-
+  Image API 25 war unter Software-Emulation nicht benutzbar (System-ANR bei der
+  Installation). Diese Emulation ist etwa 100× langsamer als ein echtes Gerät;
+  Rechenzeiten in Statuszeile/Screenshots sind entsprechend hoch.
+- Geprüft per `adb shell input tap/keyevent`, `screencap`, `uiautomator dump`
+  und logcat: vollständige Partien gegen „14 Perfekt“ und „7 Mittel“ (API 21),
+  Computer-Computer-Match (2 Partien, Turbo), Menüs und Dialoge, Stufenwahl,
+  Sprachwechsel (Partie bleibt), Drehen hoch/quer, Tastenkürzel (1–7, F1, F3/F4,
+  F6, F7), Schnellspeichern/-laden, Hilfe (Links, Suche, Zoom), Laden/Speichern
+  per Dateiauswahl (API 24; der API-21-Emulator hat keine SD-Karte für den
+  Downloads-Anbieter), Wiederherstellung nach Prozess-Ende im Hintergrund
+  (API 24). Eine Analyse auf dem Gerät wurde mit der Python-Engine
+  gegengeprüft: alle 7 Spaltenwerte und die Knotenzahl identisch.
+- Gefundene und behobene Fehler: Absturz jedes Engine-Zugs unter Android 7
+  (`String.format(Locale.ROOT, "%,d")` → „divide by zero“, Plattform-Fehler;
+  jetzt eigene Tausendergruppierung, Unit-Test ergänzt), Hilfe-Suche scrollte
+  falsch / Enter-Taste verschob den Fokus, zu kleine Bedienelemente im
+  Querformat auf kleinen Telefonen, Tastatur sprang im Match-Bildschirm auf,
+  Hilfe baute alle ~300 Absätze auf einmal (auf sehr langsamen Geräten ANR,
+  jetzt schrittweise).
