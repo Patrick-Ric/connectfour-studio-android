@@ -11,7 +11,7 @@ AutoName: ConnectFour Studio
 
 RepoType: git
 Repo: https://github.com/Patrick-Ric/connectfour-studio-android.git
-Binaries:
+Binaries: 
   https://github.com/Patrick-Ric/connectfour-studio-android/releases/download/v%v/ConnectFourStudio-%v.apk
 
 Builds:
