@@ -7,7 +7,7 @@
 | Programm-Icon (`res/drawable/ic_launcher_*.xml`, `res/mipmap-*/ic_launcher.png`, `fastlane/…/icon.png`) | nachgezeichnet nach `data/connectfour-studio.png` (`scripts/gen_icons.py`) | Patrick Götz | GNU AGPL v3 |
 | `app/src/main/assets/book/book_12ply_dist.cfb` | `book_12ply_distances.dat` aus **bitbully-databases 0.0.2** von Markus Thill, verlustfrei umgepackt (`scripts/encode_book.py`) | Markus Thill | MIT (https://github.com/MarkusThill/bitbully-databases) |
 | `app/src/main/res/raw*/help.json`, `values*/strings.xml` | Texte aus `cfs_core.help_content` und `cfs_core.lang` der Desktop-Version (generiert) | Patrick Götz | GNU AGPL v3 |
-| Screenshots in `fastlane/metadata/android/*/images/phoneScreenshots/` | auf dem Emulator aufgenommen | Patrick Götz | GNU AGPL v3 |
+| Screenshots in `fastlane/metadata/android/en-US/images/phoneScreenshots/` (gelten für alle Sprachen) | auf einem moto g(30) aufgenommen, englische Oberfläche | Patrick Götz | GNU AGPL v3 |
 
 Die Engine selbst (`core/src/main/kotlin/.../engine/`) ist eine Portierung von
 **BitBully** (C++/Python, © Markus Thill, GNU AGPL v3,
