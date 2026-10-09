@@ -1,5 +1,6 @@
 Categories:
-  - Games
+  - Board Game
+  - Strategy Game
 License: AGPL-3.0-only
 AuthorName: Patrick Götz
 SourceCode: https://github.com/Patrick-Ric/connectfour-studio-android
@@ -10,17 +11,14 @@ AutoName: ConnectFour Studio
 
 RepoType: git
 Repo: https://github.com/Patrick-Ric/connectfour-studio-android.git
-Binaries: https://github.com/Patrick-Ric/connectfour-studio-android/releases/download/v%v/ConnectFourStudio-%v.apk
+Binaries:
+  https://github.com/Patrick-Ric/connectfour-studio-android/releases/download/v%v/ConnectFourStudio-%v.apk
 
 Builds:
   - versionName: 1.0.0
     versionCode: 1
     commit: 9160d1c0a07d8bfc3c2f423b8f64c8049e40d186
     subdir: app
-    sudo:
-      - apt-get update
-      - apt-get install -y openjdk-21-jdk-headless
-      - update-alternatives --auto java
     gradle:
       - yes
 
