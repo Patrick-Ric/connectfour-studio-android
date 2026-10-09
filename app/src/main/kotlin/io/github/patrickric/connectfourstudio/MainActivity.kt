@@ -9,7 +9,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -123,25 +122,15 @@ class MainActivity : Activity(), Controller.Listener {
     private fun updateToggles() {
         val b = area.buttons[6]
         if (c.autoAnalyze) {
-            b.backgroundTintList = android.content.res.ColorStateList.valueOf(ACTIVE_BLUE)
-            b.setTextColor(android.graphics.Color.WHITE)
+            b.setBackgroundResource(R.drawable.btn_bg_accent)
+            b.setTextColor(col(R.color.btn_accent_text))
         } else {
-            b.backgroundTintList = defaultButtonTint
-            b.setTextColor(defaultButtonText)
+            b.setBackgroundResource(R.drawable.btn_bg)
+            b.setTextColor(colList(R.color.btn_text))
         }
         findViewById<Button>(R.id.stop_button)?.let {
             it.visibility = if (autoPlayRunning() && actionBar?.isShowing == false) View.VISIBLE else View.GONE
         }
-    }
-
-    // Theme defaults of the column buttons (button 0 is never re-tinted).
-    private val defaultButtonText by lazy { area.buttons[0].textColors }
-    private val defaultButtonTint by lazy {
-        // Theme colour of normal buttons (a cleared tint would leave the button white).
-        val a = obtainStyledAttributes(intArrayOf(android.R.attr.colorButtonNormal))
-        val csl = a.getColorStateList(0)
-        a.recycle()
-        csl
     }
 
     private fun bindViews() {
@@ -201,7 +190,15 @@ class MainActivity : Activity(), Controller.Listener {
         val labels = listOf("btn_new", "btn_first", "btn_back", "btn_forward", "btn_last", "btn_move", "btn_analyze")
         area.buttons.forEachIndexed { i, b ->
             val txt = t.t(labels[i])
-            if (b.text.toString() != txt) b.text = txt
+            val icon = NAV_ICONS[i]
+            if (icon != 0) {
+                // Navigation as icons; the text stays for TalkBack.
+                if (b.icon == null) b.icon = getDrawable(icon)
+                b.contentDescription = txt
+                if (b.text.isNotEmpty()) b.text = ""
+            } else if (b.text.toString() != txt) {
+                b.text = txt
+            }
         }
         findViewById<TextView>(R.id.turn_title).text = t.t("info_turn")
         findViewById<TextView>(R.id.info_title).text = t.t("info_box")
@@ -400,11 +397,11 @@ class MainActivity : Activity(), Controller.Listener {
             addView(TextView(this@MainActivity).apply {
                 text = t.t("stone_set")
                 textSize = 20f
-                setTextColor(android.graphics.Color.BLACK)
+                setTextColor(col(R.color.text_main))
             })
             addView(TextView(this@MainActivity).apply {
                 text = t.t("a_set_tip")
-                setTextColor(android.graphics.Color.GRAY)
+                setTextColor(col(R.color.text_hint))
                 setPadding(0, Math.round(4 * dp), 0, 0)
             })
         }
@@ -486,7 +483,7 @@ class MainActivity : Activity(), Controller.Listener {
         box.addView(
             TextView(this).apply {
                 text = t.t("new_random_hint")
-                setTextColor(Color.GRAY)
+                setTextColor(col(R.color.text_hint))
                 setPadding(0, Math.round(8 * dp), 0, 0)
             },
         )
@@ -624,7 +621,10 @@ class MainActivity : Activity(), Controller.Listener {
 
     companion object {
         private const val COMPACT_HEIGHT_DP = 480
-        private const val ACTIVE_BLUE = 0xff1e50be.toInt()
+        private val NAV_ICONS = intArrayOf(
+            0, R.drawable.ic_first_page, R.drawable.ic_chevron_left,
+            R.drawable.ic_chevron_right, R.drawable.ic_last_page, 0, 0,
+        )
         private const val ALL = Controller.BOARD or Controller.PANEL or Controller.MENU
         private const val REQ_OPEN = 1
         private const val REQ_SAVE = 2

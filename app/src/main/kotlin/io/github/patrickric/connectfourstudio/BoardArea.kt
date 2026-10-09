@@ -1,6 +1,8 @@
 package io.github.patrickric.connectfourstudio
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.ViewGroup
@@ -127,8 +129,28 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 }
 
-/** Button whose single-line text shrinks to fit its width (no AppCompat autosize on API 21). */
+/**
+ * Button whose single-line text shrinks to fit its width (no AppCompat autosize
+ * on API 21), or that shows a centred [icon] in the text colour instead.
+ */
 class FitButton(context: Context) : Button(context) {
+    var icon: Drawable? = null
+        set(v) {
+            field = v?.mutate()
+            invalidate()
+        }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        val d = icon ?: return
+        val s = Math.round(minOf(24 * resources.displayMetrics.density, height * 0.6f))
+        val l = (width - s) / 2
+        val t = (height - s) / 2
+        d.setTint(currentTextColor)
+        d.setBounds(l, t, l + s, t + s)
+        d.draw(canvas)
+    }
+
     private val maxSp = 15f
     private val minSp = 7f
 

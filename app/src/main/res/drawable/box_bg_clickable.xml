@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Box frame with touch feedback (score box: tap toggles the score). -->
-<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#331E50BE">
+<!-- Card with touch feedback (score box: tap toggles the score). -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/ripple">
     <item android:drawable="@drawable/box_bg" />
 </ripple>

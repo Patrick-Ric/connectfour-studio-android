@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Light theme. Dark theme: values-night/colors.xml (same names). -->
 <resources>
     <!-- Blue of the program icon -->
     <color name="cfs_blue">#1E50BE</color>
-    <color name="cfs_blue_dark">#173E94</color>
-    <color name="window_bg">#F2F2F2</color>
-    <color name="box_border">#C4C4C4</color>
-    <color name="text_main">#202020</color>
-    <color name="text_hint">#707070</color>
+    <color name="bar_bg">#1E50BE</color>
+    <color name="bar_bg_dark">#173E94</color>
+    <color name="accent">#1E50BE</color>
+    <color name="window_bg">#EEF1F6</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="box_border">#DCE1E9</color>
+    <color name="status_bg">#E3E8F0</color>
+    <color name="text_main">#1C1F26</color>
+    <color name="text_hint">#6B7280</color>
     <color name="help_head">#1E3A8A</color>
+    <color name="help_link">#1E50BE</color>
+    <color name="find_hit">#FFE066</color>
+    <color name="error_text">#B00000</color>
+    <color name="btn_bg">#DFE6F3</color>
+    <color name="btn_text_on">#1E3A8A</color>
+    <color name="btn_accent">#1E50BE</color>
+    <color name="btn_accent_text">#FFFFFF</color>
+    <color name="ripple">#331E50BE</color>
+    <color name="score_base">#E1E6EE</color>
+    <color name="score_full">#B5BCC7</color>
+    <color name="score_text">#1C1F26</color>
+    <color name="score_border">#C3CAD5</color>
 </resources>

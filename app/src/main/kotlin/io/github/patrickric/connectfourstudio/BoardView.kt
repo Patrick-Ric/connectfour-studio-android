@@ -46,7 +46,7 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private val fillPaint = Paint()
     private val borderPaint = Paint().apply {
         style = Paint.Style.STROKE
-        color = 0xff888888.toInt()
+        color = context.col(R.color.score_border)
         strokeWidth = 1f
     }
     private val textBig = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -58,6 +58,9 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         color = Color.BLACK
         textAlign = Paint.Align.CENTER
     }
+    private val baseColor = context.col(R.color.score_base)
+    private val fullColor = context.col(R.color.score_full)
+    private val neutralText = context.col(R.color.score_text)
     private val rect = RectF()
     private val winGrid = BooleanArray(Game.ROWS * Game.COLS)
     private var touching = false
@@ -305,7 +308,17 @@ class BoardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             val sc = scores?.get(col)
             val top = sc?.top ?: (col + 1).toString()
             val sub = sc?.sub ?: ""
-            fillPaint.color = sc?.bg ?: Controller.C_BASE
+            // Neutral cells follow the theme (dark mode); +/=/- keep their colours.
+            val bg = sc?.bg ?: Controller.C_BASE
+            val neutral = bg == Controller.C_BASE || bg == Controller.C_FULL
+            fillPaint.color = when (bg) {
+                Controller.C_BASE -> baseColor
+                Controller.C_FULL -> fullColor
+                else -> bg
+            }
+            val fg = if (neutral) neutralText else Color.BLACK
+            textBig.color = fg
+            textVal.color = fg
             canvas.drawRect(x0, y0, x0 + cell, y0 + h, fillPaint)
             canvas.drawRect(x0 + 0.5f, y0 + 0.5f, x0 + cell - 0.5f, y0 + h - 0.5f, borderPaint)
             val cx = x0 + cell / 2f

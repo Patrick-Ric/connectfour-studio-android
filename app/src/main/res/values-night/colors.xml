@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark theme (follows the system setting). The boards keep their colours. -->
+<resources>
+    <color name="bar_bg">#1B2840</color>
+    <color name="bar_bg_dark">#111A2B</color>
+    <color name="accent">#7EA2FF</color>
+    <color name="window_bg">#11151C</color>
+    <color name="card_bg">#1C222D</color>
+    <color name="box_border">#2C3442</color>
+    <color name="status_bg">#1A202A</color>
+    <color name="text_main">#E6E9EF</color>
+    <color name="text_hint">#9AA3B2</color>
+    <color name="help_head">#9DB8FF</color>
+    <color name="help_link">#8AB0FF</color>
+    <color name="find_hit">#806A00</color>
+    <color name="error_text">#FF8A8A</color>
+    <color name="btn_bg">#283244</color>
+    <color name="btn_text_on">#D3DEFF</color>
+    <color name="btn_accent">#3D6FE0</color>
+    <color name="btn_accent_text">#FFFFFF</color>
+    <color name="ripple">#407EA2FF</color>
+    <color name="score_base">#283244</color>
+    <color name="score_full">#161B24</color>
+    <color name="score_text">#E6E9EF</color>
+    <color name="score_border">#11151C</color>
+</resources>

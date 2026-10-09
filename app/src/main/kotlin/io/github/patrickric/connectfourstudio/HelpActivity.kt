@@ -3,7 +3,6 @@ package io.github.patrickric.connectfourstudio
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
@@ -97,7 +96,7 @@ class HelpActivity : Activity() {
         bar.addView(zoomInfo)
         root.addView(bar)
         findInfo = TextView(this).apply {
-            setTextColor(Color.rgb(176, 0, 0))
+            setTextColor(col(R.color.error_text))
             setPadding(Math.round(10 * dp), 0, 0, 0)
         }
         root.addView(findInfo)
@@ -197,7 +196,7 @@ class HelpActivity : Activity() {
         while (blocks.size <= minOf(last, items.size - 1)) {
             val it = items[blocks.size]
             val tv = TextView(this)
-            tv.setTextColor(if (it.kind == "head" || it.kind == "sub") COLOR_HEAD else COLOR_TEXT)
+            tv.setTextColor(col(if (it.kind == "head" || it.kind == "sub") R.color.help_head else R.color.text_main))
             tv.setText(it.text, TextView.BufferType.SPANNABLE)
             var holder: View = tv
             when (it.kind) {
@@ -245,7 +244,7 @@ class HelpActivity : Activity() {
 
         override fun updateDrawState(ds: TextPaint) {
             super.updateDrawState(ds)
-            ds.color = Color.BLUE
+            ds.color = col(R.color.help_link)
             ds.isUnderlineText = true
         }
     }
@@ -322,7 +321,7 @@ class HelpActivity : Activity() {
     private fun showHit(bi: Int, start: Int, end: Int) {
         buildUpTo(bi)
         val b = blocks[bi]
-        val span = BackgroundColorSpan(Color.YELLOW)
+        val span = BackgroundColorSpan(col(R.color.find_hit))
         (b.view.text as? android.text.Spannable)?.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         hitSpan = span
         hitBlock = bi
@@ -367,7 +366,5 @@ class HelpActivity : Activity() {
     companion object {
         private const val INITIAL_BLOCKS = 12
         private const val BATCH_BLOCKS = 6
-        private const val COLOR_HEAD = 0xff1e3a8a.toInt()
-        private const val COLOR_TEXT = 0xff202020.toInt()
     }
 }

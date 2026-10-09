@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Flat rounded button (theme-wide button style). -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/ripple">
+    <item>
+        <inset android:insetLeft="2dp" android:insetTop="3dp" android:insetRight="2dp" android:insetBottom="3dp">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/btn_bg" />
+                <corners android:radius="10dp" />
+            </shape>
+        </inset>
+    </item>
+</ripple>
