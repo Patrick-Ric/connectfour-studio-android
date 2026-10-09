@@ -35,7 +35,7 @@ class BoardArea @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
 
     private val sideMargin: Int get() = if (large) 0 else margin
-    private val vMargin: Int get() = if (large) 0 else margin
+    private val vMargin: Int get() = margin // top/bottom margin also with the large board
     private val effHeightFraction: Float get() = if (large) maxOf(heightFraction, LARGE_HEIGHT_FRACTION) else heightFraction
 
     init {
