@@ -6,7 +6,7 @@ and perfect real-time analysis – the Android version of ConnectFour Studio.*
 <p>
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_analysis_dark.png" width="260" alt="Analysis">
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_ochre_light.png" width="260" alt="Stone set Ochre">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_walnut_amber_ruby_dark.png" width="260" alt="Stone set Walnut-Amber-Ruby">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_walnut_amber_ruby_no_analysis.png" width="260" alt="Stone set Walnut-Amber-Ruby, analysis off">
 </p>
 
 - **Engine:** Kotlin port of BitBully by Markus Thill (bitbully 0.0.79, C++
