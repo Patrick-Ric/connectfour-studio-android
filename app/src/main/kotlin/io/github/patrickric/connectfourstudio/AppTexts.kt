@@ -29,10 +29,16 @@ object LocaleUtil {
     @Suppress("DEPRECATION")
     private fun legacyLocale(cfg: Configuration): Locale = cfg.locale
 
-    /** Context whose resources use [lang]. */
-    fun wrap(base: Context, lang: String): Context {
+    /** Context whose resources use [lang] and the chosen theme ("" = system, "light", "dark"). */
+    fun wrap(base: Context, lang: String, theme: String = ""): Context {
         val locale = Locale(lang)
         val cfg = Configuration(base.resources.configuration)
+        val night = when (theme) {
+            "light" -> Configuration.UI_MODE_NIGHT_NO
+            "dark" -> Configuration.UI_MODE_NIGHT_YES
+            else -> cfg.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        }
+        cfg.uiMode = (cfg.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or night
         if (Build.VERSION.SDK_INT >= 24) {
             cfg.setLocales(LocaleList(locale))
         } else {

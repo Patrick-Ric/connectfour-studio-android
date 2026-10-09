@@ -147,7 +147,8 @@ class FitButton(context: Context) : Button(context) {
         val l = (width - s) / 2
         val t = (height - s) / 2
         d.setTint(currentTextColor)
-        d.setBounds(l, t, l + s, t + s)
+        // Canvas is already shifted by the scroll offset of the single-line text.
+        d.setBounds(scrollX + l, scrollY + t, scrollX + l + s, scrollY + t + s)
         d.draw(canvas)
     }
 

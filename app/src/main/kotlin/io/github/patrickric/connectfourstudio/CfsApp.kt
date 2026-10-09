@@ -14,6 +14,9 @@ class CfsApp : Application() {
     /** Active language code (saved choice or system language). */
     fun lang(): String = LocaleUtil.effectiveLang(Prefs(this).lang)
 
+    /** Context for an activity: chosen language and theme. */
+    fun wrapActivity(base: Context): Context = LocaleUtil.wrap(base, lang(), Prefs(this).theme)
+
     /** Texts in [lang] (default: the active language). */
     fun texts(lang: String = lang()): AppTexts = AppTexts(LocaleUtil.wrap(this, lang), lang)
 

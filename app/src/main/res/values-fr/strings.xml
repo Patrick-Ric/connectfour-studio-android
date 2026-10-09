@@ -234,5 +234,9 @@
     <string name="a_big_board">Grand plateau</string>
     <string name="a_game_mode">Mode de jeu</string>
     <string name="a_set_tip">Astuce : glissez deux doigts sur le plateau pour changer de jeu.</string>
+    <string name="a_design">Thème</string>
+    <string name="a_design_system">Comme le système</string>
+    <string name="a_design_light">Clair</string>
+    <string name="a_design_dark">Sombre</string>
     <string name="a_menu">Menu</string>
 </resources>

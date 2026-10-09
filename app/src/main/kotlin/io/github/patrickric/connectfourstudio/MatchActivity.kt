@@ -32,7 +32,7 @@ class MatchActivity : Activity(), Controller.Listener {
     private val t get() = c.tx
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleUtil.wrap(newBase, CfsApp.of(newBase).lang()))
+        super.attachBaseContext(CfsApp.of(newBase).wrapActivity(newBase))
     }
 
     @SuppressLint("SetTextI18n") // plain numbers (p,s,w, games) as on the desktop

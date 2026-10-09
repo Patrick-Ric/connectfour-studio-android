@@ -52,7 +52,7 @@ class HelpActivity : Activity() {
     private class Block(val view: TextView, val kind: String, val text: Spanned, val holder: View)
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleUtil.wrap(newBase, CfsApp.of(newBase).lang()))
+        super.attachBaseContext(CfsApp.of(newBase).wrapActivity(newBase))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -235,5 +235,9 @@
     <string name="a_big_board">Large board</string>
     <string name="a_game_mode">Game mode</string>
     <string name="a_set_tip">Tip: swipe across the board with two fingers to change the set.</string>
+    <string name="a_design">Theme</string>
+    <string name="a_design_system">System default</string>
+    <string name="a_design_light">Light</string>
+    <string name="a_design_dark">Dark</string>
     <string name="a_menu">Menu</string>
 </resources>

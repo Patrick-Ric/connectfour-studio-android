@@ -55,7 +55,7 @@ class MainActivity : Activity(), Controller.Listener {
     private val t get() = c.tx
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleUtil.wrap(newBase, CfsApp.of(newBase).lang()))
+        super.attachBaseContext(CfsApp.of(newBase).wrapActivity(newBase))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +77,7 @@ class MainActivity : Activity(), Controller.Listener {
                 "level" -> showLevelDialog()
                 "set" -> showSetDialog()
                 "lang" -> showLanguageDialog()
+                "theme" -> showThemeDialog()
                 "random" -> showRandomDialog()
                 "info" -> showInfo()
             }
@@ -266,6 +267,7 @@ class MainActivity : Activity(), Controller.Listener {
         view.add(0, ID_BIG_BOARD, 3, t.t("a_big_board")).setCheckable(true).isChecked = c.bigBoard
         view.add(0, ID_STAND, 4, t.t("score_onoff")).setCheckable(true).isChecked = c.stand.enabled
         view.add(0, ID_STAND_RESET, 5, t.t("score_reset"))
+        view.add(0, ID_THEME, 6, t.t("a_design") + " …")
 
         menu.add(0, ID_HELP, 7, t.t("menu_help"))
         menu.add(0, ID_LANG, 8, t.t("lang_menu") + " …")
@@ -296,6 +298,7 @@ class MainActivity : Activity(), Controller.Listener {
             ID_STAND_RESET -> c.standReset()
             ID_HELP -> showHelp()
             ID_LANG -> showLanguageDialog()
+            ID_THEME -> showThemeDialog()
             ID_INFO -> showInfo()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -450,6 +453,27 @@ class MainActivity : Activity(), Controller.Listener {
                     val code = codes[which]
                     if (code != c.prefs.lang) {
                         c.setLanguage(code)
+                        recreate()
+                    }
+                }
+                .setNegativeButton(t.t("btn_cancel"), null)
+                .create(),
+        )
+    }
+
+    /** Light / dark / like the system (Android 10+ switches by itself). */
+    private fun showThemeDialog() {
+        val codes = listOf("", "light", "dark")
+        val items = arrayOf(t.t("a_design_system"), t.t("a_design_light"), t.t("a_design_dark"))
+        val cur = codes.indexOf(c.prefs.theme).coerceAtLeast(0)
+        show(
+            "theme",
+            AlertDialog.Builder(this)
+                .setTitle(t.t("a_design"))
+                .setSingleChoiceItems(items, cur) { d, which ->
+                    d.dismiss()
+                    if (codes[which] != c.prefs.theme) {
+                        c.prefs.theme = codes[which]
                         recreate()
                     }
                 }
@@ -642,6 +666,7 @@ class MainActivity : Activity(), Controller.Listener {
         private const val ID_STAND = 204
         private const val ID_BIG_BOARD = 206
         private const val ID_STAND_RESET = 205
+        private const val ID_THEME = 207
         private const val ID_LEVEL = 301
         private const val ID_MODE_HC = 302
         private const val ID_MODE_TWO = 303

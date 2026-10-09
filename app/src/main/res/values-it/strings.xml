@@ -234,5 +234,9 @@
     <string name="a_big_board">Scacchiera grande</string>
     <string name="a_game_mode">Modalità di gioco</string>
     <string name="a_set_tip">Suggerimento: scorri con due dita sulla scacchiera per cambiare set.</string>
+    <string name="a_design">Tema</string>
+    <string name="a_design_system">Come il sistema</string>
+    <string name="a_design_light">Chiaro</string>
+    <string name="a_design_dark">Scuro</string>
     <string name="a_menu">Menu</string>
 </resources>

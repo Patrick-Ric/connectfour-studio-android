@@ -34,6 +34,11 @@ class Prefs(context: Context) {
         get() = sp.getString("level", "perfekt") ?: "perfekt"
         set(v) = sp.edit().putString("level", v).apply()
 
+    /** Theme: "" = like the system, "light", "dark". */
+    var theme: String
+        get() = sp.getString("theme", "") ?: ""
+        set(v) = sp.edit().putString("theme", v).apply()
+
     /** "" = not chosen (system language). */
     var lang: String
         get() = sp.getString("lang", "") ?: ""

@@ -234,5 +234,9 @@
     <string name="a_big_board">Groot bord</string>
     <string name="a_game_mode">Spelmodus</string>
     <string name="a_set_tip">Tip: veeg met twee vingers over het bord om de set te wisselen.</string>
+    <string name="a_design">Thema</string>
+    <string name="a_design_system">Zoals systeem</string>
+    <string name="a_design_light">Licht</string>
+    <string name="a_design_dark">Donker</string>
     <string name="a_menu">Menu</string>
 </resources>

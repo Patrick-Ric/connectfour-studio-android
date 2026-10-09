@@ -234,5 +234,9 @@
     <string name="a_big_board">Großes Brett</string>
     <string name="a_game_mode">Spielmodus</string>
     <string name="a_set_tip">Tipp: Mit zwei Fingern über das Brett wischen wechselt das Set.</string>
+    <string name="a_design">Design</string>
+    <string name="a_design_system">Wie System</string>
+    <string name="a_design_light">Hell</string>
+    <string name="a_design_dark">Dunkel</string>
     <string name="a_menu">Menü</string>
 </resources>

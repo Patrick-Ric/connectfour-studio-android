@@ -74,6 +74,15 @@ ANDROID_STRINGS = {
         "es": "Consejo: desliza dos dedos sobre el tablero para cambiar el juego.",
         "nl": "Tip: veeg met twee vingers over het bord om de set te wisselen.",
         "it": "Suggerimento: scorri con due dita sulla scacchiera per cambiare set."},
+    "a_design": {
+        "de": "Design", "en": "Theme", "fr": "Thème", "es": "Tema", "nl": "Thema", "it": "Tema"},
+    "a_design_system": {
+        "de": "Wie System", "en": "System default", "fr": "Comme le système",
+        "es": "Como el sistema", "nl": "Zoals systeem", "it": "Come il sistema"},
+    "a_design_light": {
+        "de": "Hell", "en": "Light", "fr": "Clair", "es": "Claro", "nl": "Licht", "it": "Chiaro"},
+    "a_design_dark": {
+        "de": "Dunkel", "en": "Dark", "fr": "Sombre", "es": "Oscuro", "nl": "Donker", "it": "Scuro"},
     "a_menu": {
         "de": "Menü", "en": "Menu", "fr": "Menu", "es": "Menú", "nl": "Menu", "it": "Menu"},
 }

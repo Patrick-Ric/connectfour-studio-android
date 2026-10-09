@@ -237,6 +237,10 @@ internal object StringKeys {
         "a_big_board" to R.string.a_big_board,
         "a_game_mode" to R.string.a_game_mode,
         "a_set_tip" to R.string.a_set_tip,
+        "a_design" to R.string.a_design,
+        "a_design_system" to R.string.a_design_system,
+        "a_design_light" to R.string.a_design_light,
+        "a_design_dark" to R.string.a_design_dark,
         "a_menu" to R.string.a_menu,
     )
 }
