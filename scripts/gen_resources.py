@@ -217,7 +217,8 @@ HELP_ANDROID = {
         "rechts daneben; die Statuszeile steht immer unten. Mit Tastatur (Tablet, Chromebook) "
         "gelten alle Tastenkürzel, eine Maus zeigt den Ghost-Stein beim Überfahren und das "
         "Mausrad über dem Brett wechselt das Stein-Set. Partie und Analyse bleiben beim Drehen "
-        "des Geräts und im Hintergrund erhalten."]),
+        "des Geräts und im Hintergrund erhalten.",
+        "Schneller als am Desktop: Für alle Stellungen mit bis zu zwei Steinen sind die exakten Bewertungen in einem kleinen eingebauten Buch gespeichert – Analyse und Computerzug sind dort sofort fertig (Tiefe und Quelle: „Buch 2d“). Bis zwölf Steine endet die Suche, sobald alle Varianten das 12-ply-Buch erreichen (Tiefe: „Buch 12d“); die Bewertungen sind dieselben wie bei der Vollsuche."]),
     "en": ("Using ConnectFour Studio on Android", [
         "This help describes all functions of ConnectFour Studio. On phones and tablets, read "
         "“tap” for “click”: tapping a column of the board or a field of the evaluation row drops "
@@ -235,7 +236,8 @@ HELP_ANDROID = {
         "landscape to its right; the status bar is always at the bottom. With a keyboard "
         "(tablet, Chromebook) all keyboard shortcuts work, a mouse shows the ghost stone when "
         "hovering and the mouse wheel over the board changes the stone set. Game and analysis "
-        "are kept when the device is rotated and while the app is in the background."]),
+        "are kept when the device is rotated and while the app is in the background.",
+        "Faster than on the desktop: for all positions with up to two stones the exact evaluations are stored in a small built-in book, so analysis and computer moves are instant there (depth and source: “Book 2d”). Up to twelve stones the search stops as soon as every line reaches the 12-ply book (depth: “Book 12d”); the evaluations are the same as with the full search."]),
     "fr": ("Utilisation sur Android", [
         "Cette aide décrit toutes les fonctions de ConnectFour Studio. Sur smartphone et "
         "tablette, lisez « toucher » au lieu de « cliquer » : toucher une colonne du plateau ou "
@@ -255,7 +257,8 @@ HELP_ANDROID = {
         "(tablette, Chromebook), tous les raccourcis clavier fonctionnent ; une souris affiche "
         "le pion fantôme au survol et la molette au-dessus du plateau change de jeu de pions. "
         "La partie et l'analyse sont conservées lors de la rotation de l'appareil et en "
-        "arrière-plan."]),
+        "arrière-plan.",
+        "Plus rapide que sur ordinateur : pour toutes les positions comptant jusqu'à deux pions, les évaluations exactes sont enregistrées dans un petit livre intégré ; l'analyse et le coup de l'ordinateur y sont immédiats (profondeur et source : « Livre 2d »). Jusqu'à douze pions, la recherche s'arrête dès que toutes les variantes atteignent le livre 12-ply (profondeur : « Livre 12d ») ; les évaluations sont les mêmes qu'avec la recherche complète."]),
     "es": ("Uso en Android", [
         "Esta ayuda describe todas las funciones de ConnectFour Studio. En móviles y tabletas, "
         "lea «tocar» en lugar de «hacer clic»: tocar una columna del tablero o una casilla de "
@@ -274,7 +277,8 @@ HELP_ANDROID = {
         "horizontal, a su derecha; la barra de estado está siempre abajo. Con teclado (tableta, "
         "Chromebook) funcionan todos los atajos de teclado; un ratón muestra la ficha fantasma "
         "al pasar por encima y la rueda sobre el tablero cambia el juego de fichas. La partida "
-        "y el análisis se conservan al girar el dispositivo y en segundo plano."]),
+        "y el análisis se conservan al girar el dispositivo y en segundo plano.",
+        "Más rápido que en el escritorio: para todas las posiciones con hasta dos fichas, las evaluaciones exactas están guardadas en un pequeño libro integrado, así que el análisis y la jugada del ordenador son inmediatos (profundidad y fuente: «Libro 2d»). Hasta doce fichas, la búsqueda termina en cuanto todas las variantes alcanzan el libro 12-ply (profundidad: «Libro 12d»); las evaluaciones son las mismas que con la búsqueda completa."]),
     "nl": ("Bediening op Android", [
         "Deze help beschrijft alle functies van ConnectFour Studio. Op telefoon en tablet geldt "
         "„tikken” in plaats van „klikken”: tikken op een kolom van het bord of op een vak van de "
@@ -292,7 +296,8 @@ HELP_ANDROID = {
         "de statusregel staat altijd onderaan. Met een toetsenbord (tablet, Chromebook) werken "
         "alle sneltoetsen, een muis toont de ghost-steen bij aanwijzen en het muiswiel boven het "
         "bord wisselt de stenenset. Partij en analyse blijven behouden bij het draaien van het "
-        "apparaat en op de achtergrond."]),
+        "apparaat en op de achtergrond.",
+        "Sneller dan op de desktop: voor alle stellingen met maximaal twee stenen staan de exacte beoordelingen in een klein ingebouwd boek, zodat analyse en computerzet daar direct klaar zijn (diepte en bron: „Boek 2d”). Tot twaalf stenen stopt de zoektocht zodra alle varianten het 12-ply-boek bereiken (diepte: „Boek 12d”); de beoordelingen zijn dezelfde als bij de volledige zoektocht."]),
     "it": ("Uso su Android", [
         "Questa guida descrive tutte le funzioni di ConnectFour Studio. Su smartphone e tablet "
         "si legga «toccare» invece di «fare clic»: toccando una colonna della scacchiera o una "
@@ -311,7 +316,8 @@ HELP_ANDROID = {
         "orizzontale alla sua destra; la barra di stato è sempre in basso. Con una tastiera "
         "(tablet, Chromebook) funzionano tutte le scorciatoie; un mouse mostra la pedina "
         "fantasma al passaggio e la rotella sopra la scacchiera cambia il set di pedine. Partita "
-        "e analisi restano conservate ruotando il dispositivo e in background."]),
+        "e analisi restano conservate ruotando il dispositivo e in background.",
+        "Più veloce che sul desktop: per tutte le posizioni con al massimo due pedine le valutazioni esatte sono memorizzate in un piccolo libro integrato, quindi analisi e mossa del computer sono immediate (profondità e fonte: «Libro 2d»). Fino a dodici pedine la ricerca si ferma non appena tutte le varianti raggiungono il libro 12-ply (profondità: «Libro 12d»); le valutazioni sono le stesse della ricerca completa."]),
 }
 
 

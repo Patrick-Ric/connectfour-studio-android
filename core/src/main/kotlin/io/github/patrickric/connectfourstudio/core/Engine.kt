@@ -2,6 +2,7 @@ package io.github.patrickric.connectfourstudio.core
 
 import io.github.patrickric.connectfourstudio.core.engine.BitBully
 import io.github.patrickric.connectfourstudio.core.engine.Board
+import io.github.patrickric.connectfourstudio.core.engine.MiniBook
 import io.github.patrickric.connectfourstudio.core.engine.OpeningBook
 import io.github.patrickric.connectfourstudio.core.engine.SearchAborted
 import java.util.concurrent.locks.ReentrantLock
@@ -90,6 +91,7 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
 
     /** "Quelle" display: "Buch 12d" up to 12 stones, then "berechnet". */
     fun bookText(nMoves: Int, tx: Texts): String {
+        if (lastDepth == DEPTH_MINIBOOK) return "${tx.t("depth_book")} $MINIBOOK_SHORT"
         if (!isBookLoaded()) return "–"
         if (nMoves <= BOOK_HORIZON) return "${tx.t("book_from_book")} $BOOK_SHORT"
         return tx.t("book_computed")
@@ -186,6 +188,15 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
         // reaches 12 - stones: from then on the scores are exact and deeper
         // iterations only repeat the same search (Android only, see DECISIONS.md).
         val bookDepth = if (isBookLoaded() && board.countTokens() < BOOK_HORIZON) BOOK_HORIZON - board.countTokens() else null
+        // Up to two stones the exact scores come from the mini book "Buch 2d".
+        val mini = MiniBook.scores(board)
+        if (mini != null) {
+            if (stop()) return scores to nodes
+            scores = Scores(mini)
+            lastDepth = DEPTH_MINIBOOK
+            onProgress?.invoke(DEPTH_MINIBOOK, scores, 0L, (System.nanoTime() - t0) / 1e9)
+            return scores to 0L
+        }
         lock.withLock {
             agent.resetNodeCounter()
             if (!keepTt) agent.resetTranspositionTable()
@@ -297,7 +308,8 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
             return result(filteredBlunder(board, scores, 5, null, rng))
         }
         var dist = scores.cols.associateWith { movesLeft(board, scores[it]!!) }
-        if (dist.values.toSet().size <= 1) {
+        val exactAlready = lastDepth == -1 || lastDepth == DEPTH_BOOK || lastDepth == DEPTH_MINIBOOK
+        if (dist.values.toSet().size <= 1 && !exactAlready) {
             try {
                 val exact = lock.withLock {
                     agent.abort = abort
@@ -400,10 +412,15 @@ class Engine(logTtSize: Int = BitBully.DEFAULT_LOG_TT_SIZE, book: OpeningBook? =
         /** Pseudo depth: iteration stopped because every line reached the book. */
         const val DEPTH_BOOK = -2
 
+        /** Pseudo depth: scores taken from the mini book "Buch 2d" (no search). */
+        const val DEPTH_MINIBOOK = -3
+        const val MINIBOOK_SHORT = "2d"
+
         /** "Tiefe" text: number, "Voll" (-1) or "Buch 12d" ([DEPTH_BOOK]). */
         fun depthLabel(depth: Int, tx: Texts): String = when (depth) {
             -1 -> tx.t("depth_full")
             DEPTH_BOOK -> "${tx.t("depth_book")} $BOOK_SHORT"
+            DEPTH_MINIBOOK -> "${tx.t("depth_book")} $MINIBOOK_SHORT"
             else -> depth.toString()
         }
 

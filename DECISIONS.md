@@ -68,6 +68,17 @@ Feature-Abgleich und mobile Abweichungen stehen in `FEATURES.md`.
   Tests prüfen das an allen Referenzstellungen (gleiche Werte wie die volle
   Python-Suche, Knotenzahl = Python-Suche bis zur Buchtiefe). Die Qt-Version
   rechnet noch alle Tiefen.
+- **Mini-Buch „Buch 2d“ (nur Android):** Für die 57 Stellungen mit 0–2
+  Steinen (Grundstellung, 7 nach dem ersten, 49 nach dem zweiten Halbzug) sind
+  die exakten Bewertungen aller 7 Züge eingebaut (`MiniBookData.kt`, erzeugt
+  mit der Original-Engine bitbully 0.0.79 per `scripts/gen_minibook.py`). Dort
+  entfällt die Suche ganz: Computer-Eröffnung, Antwort auf den ersten Zug und
+  Analyse sind sofort fertig (vorher auf einem Einsteiger-Handy bis ca. 2 s).
+  Anzeige: Tiefe/Quelle „Buch 2d“, Knoten 0. Ein Unit-Test vergleicht alle 57
+  Einträge mit der Vollsuche des Kotlin-Ports. Die Zugwahl bleibt identisch;
+  die zusätzliche Vollsuche bei lauter gleich langen Verlustzügen entfällt,
+  wenn die Werte schon exakt sind (Buch 2d, Buch 12d, Voll) – sie lieferte
+  dieselben Werte.
 - **Fortschritt live:** Die Python-Version sammelte die Fortschrittsmeldungen
   bis zum Ende der Suche; hier werden sie sofort (gedrosselt auf 200 ms) aus
   dem Worker-Thread an die Oberfläche gemeldet.

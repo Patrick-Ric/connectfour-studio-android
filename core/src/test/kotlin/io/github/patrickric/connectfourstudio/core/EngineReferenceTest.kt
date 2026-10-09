@@ -49,7 +49,10 @@ class EngineReferenceTest {
             val finalScores = scoresOf(stages.last()["scores"].list())
             assertEquals("final $moves", finalScores, (0 until 7).map { scores[it] })
             val n = moves.size
-            if (n < 12) {
+            if (n <= 2) {
+                assertEquals(0L, nodes) // mini book "Buch 2d"
+                assertEquals(Engine.DEPTH_MINIBOOK, engine.lastDepth)
+            } else if (n < 12) {
                 val stop = stages.first { (it["depth"] as Long).toInt().let { d -> d != -1 && d >= 12 - n } }
                 assertEquals("book stage exact $moves", finalScores, scoresOf(stop["scores"].list()))
                 assertEquals("nodes up to book $moves", stop["nodes"] as Long, nodes)

@@ -117,18 +117,27 @@ class EngineTest {
     @Test
     fun iterativeScoresProgressAndAbort() {
         val seen = ArrayList<Int>()
-        val (scores, nodes) = engine.iterativeScores(board(3), onProgress = { d, _, _, _ -> seen.add(d) })
+        val (scores, nodes) = engine.iterativeScores(board(3, 3, 2), onProgress = { d, _, _, _ -> seen.add(d) })
         assertEquals((0 until 7).toList(), scores.cols)
         assertTrue(nodes > 0)
         assertTrue(seen.isNotEmpty())
-        // 1 stone: stops as soon as every line reaches the 12-ply book
+        // 3 stones: stops as soon as every line reaches the 12-ply book
         assertEquals(Engine.DEPTH_BOOK, seen.last())
-        assertEquals("Buch 12d", engine.pliesText(1, de))
+        assertEquals("Buch 12d", engine.pliesText(3, de))
+        assertEquals("Buch 12d", engine.bookText(3, de))
+        seen.clear()
+        // 1 stone: mini book "Buch 2d", no search
+        val (mini, miniNodes) = engine.iterativeScores(board(3), onProgress = { d, _, _, _ -> seen.add(d) })
+        assertEquals(7, mini.cols.size)
+        assertEquals(0L, miniNodes)
+        assertEquals(listOf(Engine.DEPTH_MINIBOOK), seen)
+        assertEquals("Buch 2d", engine.pliesText(1, de))
+        assertEquals("Buch 2d", engine.bookText(1, de))
         seen.clear()
         engine.iterativeScores(Game.boardFromMoves(Gp4.parse("4444443333332")), onProgress = { d, _, _, _ -> seen.add(d) })
         assertEquals(-1, seen.last()) // 13 stones: last stage = full search
         assertEquals("Voll", engine.pliesText(13, de))
-        val (aborted, _) = engine.iterativeScores(board(3), abort = { true })
+        val (aborted, _) = engine.iterativeScores(board(3, 3, 2), abort = { true })
         assertTrue(aborted.isEmpty())
     }
 
@@ -137,10 +146,26 @@ class EngineTest {
         // The Kotlin port can also stop inside a stage (C++: only between stages).
         var calls = 0
         val t0 = System.nanoTime()
-        val (scores, _) = engine.iterativeScores(Board(), abort = { ++calls > 3 })
+        // Engine without book, 3 stones (not in the mini book): would take minutes.
+        val (scores, _) = Engine(logTtSize = 16).iterativeScores(board(3, 3, 2), abort = { ++calls > 3 })
         assertTrue((System.nanoTime() - t0) / 1e9 < 5.0)
         assertTrue(calls > 3)
         assertTrue(scores.cols.size <= 7)
+    }
+
+    @Test
+    fun miniBookMatchesFullSearch() {
+        // All 57 positions with up to two stones: mini book == full search of this port.
+        assertEquals(57, io.github.patrickric.connectfourstudio.core.engine.MiniBook.size)
+        val solver = BitBully(20, TestSupport.book)
+        val seqs = listOf(emptyList<Int>()) + (0 until 7).map { listOf(it) } +
+            (0 until 7).flatMap { a -> (0 until 7).map { b -> listOf(a, b) } }
+        for (seq in seqs) {
+            val b = Board.fromMoves(seq)
+            val mini = io.github.patrickric.connectfourstudio.core.engine.MiniBook.scores(b)!!
+            assertTrue("$seq", mini.contentEquals(solver.scoreMoves(b, -1)))
+        }
+        assertNull(io.github.patrickric.connectfourstudio.core.engine.MiniBook.scores(board(3, 3, 2)))
     }
 
     @Test
