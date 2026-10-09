@@ -30,12 +30,11 @@ Builds:
     gradle:
       - yes
 
-# Reproducible build: once a release APK signed by the developer is attached
-# to the GitHub release, F-Droid can verify it and publish it with the
-# developer signature. Then add (fill in the certificate SHA-256):
-#
-#   Binaries: https://github.com/Patrick-Ric/connectfour-studio-android/releases/download/v%v/ConnectFourStudio-%v.apk
-#   AllowedAPKSigningKeys: <sha256 of the signing certificate, lower case, no colons>
+# Reproducible build: F-Droid builds the APK itself, compares it with the
+# developer-signed APK of the GitHub release and, if identical, publishes it
+# with the developer signature (same signature as the GitHub download).
+Binaries: https://github.com/Patrick-Ric/connectfour-studio-android/releases/download/v%v/ConnectFourStudio-%v.apk
+AllowedAPKSigningKeys: 0290aabc0607b5ba98d1fbf67e8f03b166d04f2d6545634f99030278c60546a1
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
