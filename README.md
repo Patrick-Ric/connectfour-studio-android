@@ -156,22 +156,11 @@ to minutes instead of milliseconds) but fine for functional tests. See
 
 ## F-Droid
 
-1. Publish the repository (e.g. `https://github.com/Patrick-Ric/connectfour-studio-android`)
-   and adjust the application ID if needed (`DECISIONS.md`).
-2. Tag the release: `git tag v1.0.0 && git push --tags`
-   (`versionCode`/`versionName` in `app/build.gradle.kts`, changelog
-   `fastlane/metadata/android/*/changelogs/<versionCode>.txt`).
-3. Fork https://gitlab.com/fdroid/fdroiddata, copy `docs/fdroid-metadata.yml`
-   to `metadata/<applicationId>.yml`, adjust URLs/commit, then check locally:
-   `fdroid readmeta`, `fdroid lint <applicationId>`,
-   `fdroid build -v -l <applicationId>` (with fdroidserver installed).
-4. Open a merge request against fdroiddata ("New app: ConnectFour Studio").
-5. Optional (reproducible builds): sign a release APK with your own key,
-   attach it to the GitHub release and add `Binaries:` +
-   `AllowedAPKSigningKeys:` to the recipe (see the comment in the template);
-   F-Droid then ships your signed APK after verifying it bit for bit.
-
-Store texts, icon and screenshots are read from `fastlane/metadata/android/`.
+Inclusion in F-Droid is in review:
+https://gitlab.com/fdroid/fdroiddata/-/merge_requests/51839 (recipe:
+`docs/fdroid-metadata.yml`, reproducible build with the developer signature).
+Store texts, icon and screenshots come from `fastlane/metadata/android/`.
+How to publish a new version: `docs/RELEASING.md`.
 
 ## Credits
 
