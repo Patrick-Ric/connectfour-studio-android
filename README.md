@@ -51,6 +51,11 @@ reinstalling.
   by Markus Thill (bitbully 0.0.79, C++ core) with the 12-ply-dist opening
   book – same scores *and* node counts as the original engine (checked by the
   unit tests)
+- **Own mini book "2-ply-dist" (Buch 2d):** exact scores of all moves for the
+  57 positions with 0–2 stones, computed once with a full search of the
+  original engine (`scripts/gen_minibook.py`) and compiled into the app – so
+  the opening moves, which a full search would take longest for, are
+  analysed instantly
 - **App:** Kotlin, Android framework only (no AndroidX, no Material library,
   no other runtime dependencies), minSdk 21 (Android 5.0), targetSdk 37
 - Feature comparison with the desktop version: [FEATURES.md](FEATURES.md);
