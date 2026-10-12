@@ -109,6 +109,7 @@ class HelpActivity : Activity() {
         scroll.addView(content)
         root.addView(scroll, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
         setContentView(root)
+        SystemBars.keepClear(this, FORCE_EDGE_TEST)
         build()
         applyZoom()
     }

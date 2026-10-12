@@ -1,0 +1,1 @@
+Fix for Android 15 and newer: the top row of the board and the status line were hidden behind the title bar and the system bars (edge-to-edge display).

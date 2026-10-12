@@ -1,0 +1,1 @@
+Korrektur für Android 15 und neuer: Die oberste Brettreihe und die Statuszeile lagen hinter der Titelleiste bzw. den Systemleisten (Edge-to-Edge-Darstellung).

@@ -66,6 +66,7 @@ class MainActivity : Activity(), Controller.Listener {
         if (fresh && savedInstanceState?.containsKey("history") == true) c.restoreState(savedInstanceState)
         title = getString(R.string.app_name)
         setContentView(R.layout.activity_main)
+        SystemBars.keepClear(this, FORCE_EDGE_TEST)
         bindViews()
         setupCompactLandscape()
         c.addListener(this)

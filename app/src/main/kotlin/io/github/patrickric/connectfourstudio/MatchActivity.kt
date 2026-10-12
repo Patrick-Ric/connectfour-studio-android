@@ -40,6 +40,7 @@ class MatchActivity : Activity(), Controller.Listener {
         super.onCreate(savedInstanceState)
         c = CfsApp.of(this).controller
         setContentView(R.layout.activity_match)
+        SystemBars.keepClear(this, FORCE_EDGE_TEST)
         title = t.t("match_title")
         c.matchWinOpen = true
 
